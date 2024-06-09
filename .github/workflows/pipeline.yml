@@ -11,7 +11,10 @@ on:
 jobs:
   build:
     name: Build portfolio
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-
+    defaults:
+      run:
+        working-directory: ./client
 
     steps:
       - name: Checkout repository
