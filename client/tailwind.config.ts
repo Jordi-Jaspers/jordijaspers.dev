@@ -55,6 +55,8 @@ const config: Config = {
 				sm: "calc(var(--radius) - 4px)"
 			},
 			fontFamily: {
+				moranga: ['"Moranga"'],
+				silka: ['"Silka Regular"'],
 				sans: [...fontFamily.sans]
 			}
 		}

@@ -1,59 +1,82 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+    import Navigation from "$lib/components/navigation";
+    import type {GridController} from 'svelte-grid-extended';
+    import {Grid, GridItem} from 'svelte-grid-extended';
+    import {writable, type Writable} from "svelte/store";
+    import {onDestroy, onMount} from "svelte";
+    import {browser} from '$app/environment';
+    import {Grip} from "lucide-svelte";
+
+    export let data;
+    const fraction: number = 164;
+    let interval: Timer;
+    const itemSize = {width: fraction, height: fraction};
+    const mobileLayout = data.mobileLayout;
+    const desktopLayout = data.desktopLayout;
+
+    let controller: GridController;
+    let items: Writable<GridObject[]> = writable([]);
+    let previousCols: Writable<number> = writable(2);
+    let cols: Writable<number> = writable(2);
+    let rows: Writable<number> = writable(10);
+
+    function resetGrid(): void {
+        $items = $cols > 2 ? desktopLayout : mobileLayout;
+        controller.compress();
+    }
+
+    function compressGrid(): void {
+        controller.compress();
+    }
+
+    function updateGrid() {
+        const maxWidth = 800;
+        $previousCols = $cols;
+        $cols = window.innerWidth >= maxWidth ? 4 : 2
+
+        const maxHeight = window.innerHeight;
+        const newRows: number = Math.floor(maxHeight / fraction);
+        rows.set(newRows < 1 ? 1 : newRows);
+
+        resetGrid();
+    }
+
+    onMount(() => {
+        interval = setInterval(compressGrid, 100);
+        if (browser) {
+            updateGrid();
+            window.addEventListener('resize', updateGrid);
+        }
+    });
+
+    onDestroy(() => {
+        if (browser) {
+            window.removeEventListener('resize', updateGrid);
+        }
+        clearInterval(interval);
+    });
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+    <title>Jordi Jaspers</title>
+    <meta name="description"
+          content="Welcome to Jordi Jaspers' web portfolio. With over 5 years of experience in software development, specializing in Spring Boot and DevOps, Jordi delivers efficient and elegant solutions. Discover his projects, expertise, and how he can help bring your software ideas to life."/>
 </svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
+<Navigation/>
+<div class="flex mb-20 h-screen min-w-[375px] max-w-[800px] mx-auto" style="width: {$cols > 2 ? 800 : 375}px;">
+    <Grid class="grid-container" cols={$cols} rows={$rows} bounds={true} {itemSize} collision="push" gap={16} bind:controller>
+        {#each $items as {id, x, y, w, h, component} (id)}
+            <GridItem {id} bind:x bind:y bind:w bind:h resizable={false} previewClass="grid-item-preview" class="grid-item">
+                <div slot="moveHandle" let:moveStart>
+                    <div class="absolute top-0 right-0 m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
+                        <Grip class="w-full h-full p-2"/>
+                    </div>
+                </div>
+                {#if component}
+                    <svelte:component this={component}/>
+                {/if}
+            </GridItem>
+        {/each}
+    </Grid>
+</div>
