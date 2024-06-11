@@ -9,11 +9,11 @@
 
     export let data;
     const fraction: number = 164;
-    let interval: Timer;
     const itemSize = {width: fraction, height: fraction};
     const mobileLayout = data.mobileLayout;
     const desktopLayout = data.desktopLayout;
 
+    let interval: Timer;
     let controller: GridController;
     let items: Writable<GridObject[]> = writable([]);
     let previousCols: Writable<number> = writable(2);
@@ -67,12 +67,13 @@
 <div class="flex mb-20 h-screen min-w-[375px] max-w-[800px] mx-auto" style="width: {$cols > 2 ? 800 : 375}px;">
     <Grid class="grid-container" cols={$cols} rows={$rows} bounds={true} {itemSize} collision="push" gap={16} bind:controller>
         {#each $items as {id, x, y, w, h, component} (id)}
-            <GridItem {id} bind:x bind:y bind:w bind:h resizable={false} previewClass="grid-item-preview" class="grid-item">
+            <GridItem {id} bind:x bind:y bind:w bind:h resizable={false} previewClass="grid-item-preview" activeClass="cursor-grabbing" class="grid-item">
                 <div slot="moveHandle" let:moveStart>
                     <div class="absolute top-0 right-0 m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
-                        <Grip class="w-full h-full p-2"/>
+                        <Grip class="w-full h-full p-2 cursor-grab"/>
                     </div>
                 </div>
+
                 {#if component}
                     <svelte:component this={component}/>
                 {/if}
