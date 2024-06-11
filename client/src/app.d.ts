@@ -17,6 +17,7 @@ declare global {
 		w: number;
 		h: number;
 		component: any;
+		border: boolean;
 	}
 }
 

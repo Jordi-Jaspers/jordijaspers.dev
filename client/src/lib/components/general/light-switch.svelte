@@ -1,14 +1,13 @@
 <script lang="ts">
     import { setMode } from "mode-watcher";
     import { Switch } from "$lib/components/ui/switch/index.js";
-    import { writable, type Writable } from "svelte/store";
     import { Moon, Sun } from "lucide-svelte";
     import { crossfade } from 'svelte/transition';
     import {cubicOut} from "svelte/easing";
+    import {isDarkMode} from "$lib/components/store/localstorage.ts";
 
-    let checked: Writable<boolean> = writable(false);
 
-    checked.subscribe((value) => {
+    isDarkMode.subscribe((value) => {
         setMode(value ? "dark" : "light");
     });
 
@@ -32,7 +31,7 @@
 
 <div class="flex flex-col items-center justify-center my-auto h-full space-y-2">
     <div class="relative w-8 h-8">
-        {#if !$checked}
+        {#if !$isDarkMode}
             <div class="absolute inset-0 w-full h-full" in:receive={{ key: 'moon' }} out:send={{ key: 'moon' }}>
                 <Moon class="w-full h-full text-foreground"/>
             </div>
@@ -43,5 +42,5 @@
         {/if}
     </div>
 
-    <Switch id="light-switch" bind:checked={$checked} aria-label="Toggle theme"/>
+    <Switch id="light-switch" bind:checked={$isDarkMode} aria-label="Toggle theme"/>
 </div>

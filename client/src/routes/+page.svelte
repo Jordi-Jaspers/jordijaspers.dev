@@ -66,10 +66,10 @@
 <Navigation/>
 <div class="flex mb-20 h-screen min-w-[375px] max-w-[800px] mx-auto" style="width: {$cols > 2 ? 800 : 375}px;">
     <Grid class="grid-container" cols={$cols} rows={$rows} bounds={true} {itemSize} collision="push" gap={16} bind:controller>
-        {#each $items as {id, x, y, w, h, component} (id)}
-            <GridItem {id} bind:x bind:y bind:w bind:h resizable={false} previewClass="grid-item-preview" activeClass="cursor-grabbing" class="grid-item">
+        {#each $items as {id, x, y, w, h, component, border} (id)}
+            <GridItem {id} bind:x bind:y bind:w bind:h resizable={false} previewClass="grid-item-preview" activeClass="cursor-grabbing" class="grid-item {!border && 'border-none'}">
                 <div slot="moveHandle" let:moveStart>
-                    <div class="absolute top-0 right-0 m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
+                    <div class="absolute !z-[10] top-0 right-0 m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
                         <Grip class="w-full h-full p-2 cursor-grab"/>
                     </div>
                 </div>

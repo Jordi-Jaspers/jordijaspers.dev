@@ -84,8 +84,22 @@
         transition: all 300ms cubic-bezier(0.65, 0, 0.35, 1);
     }
 
+    .map-button {
+        @apply z-[10] absolute m-2 h-10 w-10 bg-background rounded-full overflow-hidden justify-center;
+    }
+
+    .map-button-shadow {
+        box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 2px;
+        transition: box-shadow 0.2s ease-in-out 0s;
+    }
+
+    .map-button-shadow:hover {
+        cursor: pointer;
+        box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 5px;
+    }
+
     .grid-item {
-        @apply p-8 bg-background dark:bg-[#090c10] rounded-3xl border-4 border-transparent dark:border-accent shadow-md hover:shadow-xl transition-shadow duration-1000 ease-in-out;
+        @apply p-8 bg-background dark:bg-[#090c10] rounded-3xl border-4 border-transparent dark:border-accent shadow-md hover:shadow-xl transition-shadow duration-1000 ease-in-out overflow-hidden;
     }
 
     .grid-item-preview {

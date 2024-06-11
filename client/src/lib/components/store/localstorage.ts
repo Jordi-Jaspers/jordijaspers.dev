@@ -81,3 +81,6 @@ class LocalStorage<T> {
 
 const activeTabStore: LocalStorage<number> = new LocalStorage('activeTab', 0);
 export const activeTab: Writable<number> = activeTabStore.get();
+
+const isDarkModeStore: LocalStorage<boolean> = new LocalStorage('isDarkMode', false);
+export const isDarkMode: Writable<boolean> = isDarkModeStore.get();
