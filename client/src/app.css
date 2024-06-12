@@ -136,6 +136,10 @@
     .pause {
         animation-play-state: paused;
     }
+
+    .rainbow-text {
+        @apply bg-gradient-to-r from-blue-600 via-25% via-primary to-85% to-red-600 inline-block bg-clip-text text-transparent;
+    }
 }
 
 

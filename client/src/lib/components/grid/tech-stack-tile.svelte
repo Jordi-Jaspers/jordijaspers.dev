@@ -70,8 +70,8 @@
         <ul class="flex items-center space-x-8 h-28 infinite-x-scroll {$isHovering1 && 'pause'}">
             {#each techStack as {name, logo}}
                 <li class="flex flex-col justify-end space-y-4 h-full">
-                    <svelte:component this={logo} class="dark:fill-white fill-muted-foreground/75"/>
-                    <p class="font-montserrat text-xs font-semibold text-muted-foreground/75 text-nowrap">{name}</p>
+                    <svelte:component this={logo} class="dark:fill-white fill-foreground"/>
+                    <p class="font-montserrat text-xs font-semibold text-fill-foreground text-nowrap">{name}</p>
                 </li>
             {/each}
         </ul>
@@ -88,16 +88,16 @@
         <ul class="flex items-center space-x-8 h-28 infinite-x-scroll-reverse {$isHovering2 && 'pause'}">
             {#each techStack as {name, logo}}
                 <li class="flex flex-col justify-end space-y-4 h-full">
-                    <svelte:component this={logo} class="dark:fill-white fill-muted-foreground/75"/>
-                    <p class="font-montserrat text-xs font-semibold text-muted-foreground/75 text-nowrap">{name}</p>
+                    <svelte:component this={logo} class="dark:fill-white fill-foreground"/>
+                    <p class="font-montserrat text-xs font-semibold text-foreground text-nowrap">{name}</p>
                 </li>
             {/each}
         </ul>
         <ul class="flex items-center space-x-8 h-28 infinite-x-scroll-reverse {$isHovering2 && 'pause'}">
             {#each techStack as {name, logo}}
                 <li class="flex flex-col justify-end space-y-4 h-full">
-                    <svelte:component this={logo} class="dark:fill-white fill-muted-foreground/75"/>
-                    <p class="font-montserrat text-xs font-semibold text-muted-foreground/75 text-nowrap">{name}</p>
+                    <svelte:component this={logo} class="dark:fill-white fill-foreground"/>
+                    <p class="font-montserrat text-xs font-semibold text-foreground text-nowrap">{name}</p>
                 </li>
             {/each}
         </ul>
