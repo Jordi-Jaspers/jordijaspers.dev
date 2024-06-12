@@ -57,7 +57,27 @@ const config: Config = {
 			fontFamily: {
 				moranga: ['"Moranga"'],
 				silka: ['"Silka Regular"'],
+				montserrat: ['"Montserrat"'],
 				sans: [...fontFamily.sans]
+			},
+			animation: {
+				'infinite-x-scroll': 'infinite-x-scroll 40s linear infinite',
+				'infinite-x-scroll-reverse': 'infinite-x-scroll-reverse 40s linear infinite',
+				'infinite-y-scroll': 'infinite-y-scroll 40s linear infinite',
+			},
+			keyframes: {
+				'infinite-x-scroll': {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(-100%)' },
+				},
+				'infinite-x-scroll-reverse': {
+					from: { transform: 'translateX(-100%)' },
+					to: { transform: 'translateX(0)' },
+				},
+				'infinite-y-scroll': {
+					from: { transform: 'translateY(0)' },
+					to: { transform: 'translateY(-100%)' },
+				}
 			}
 		}
 	},

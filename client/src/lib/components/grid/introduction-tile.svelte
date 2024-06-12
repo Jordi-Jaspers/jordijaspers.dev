@@ -39,9 +39,9 @@
     </div>
 
     <div class="space-y-2">
-        <p class="font-sans">Hello, I'm <span class="font-moranga text-2xl font-bold">Jordi</span>, a software engineer specializing in web development. I would love to realize your next project.</p>
+        <p class="font-montserrat text-[0.9rem] justify-evenly">I'm <span class="font-moranga text-2xl font-bold">Jordi</span>, your go-to software engineer in the web development space. Ranging from Enterprise application to simple webpages.</p>
         <button class="group w-full rounded-2xl flex justify-center space-x-2 border-2 border-accent py-1" on:click={toggleProfile} disabled={isSwitching} >
-            <RefreshCcw class="{isSwitching && 'group-hover:rotate-[540deg]'} transition-transform duration-1000"/>
+            <RefreshCcw class="{!isSwitching && 'group-hover:rotate-[540deg]'} transition-transform duration-1000"/>
             <span>Toggle Image</span>
         </button>
     </div>
