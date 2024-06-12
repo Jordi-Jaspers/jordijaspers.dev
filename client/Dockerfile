@@ -10,7 +10,7 @@ RUN mkdir /workspace
 WORKDIR /workspace
 
 # Copy all the application files to the container
-COPY . .
+COPY .. .
 
 # These are build arguments that will be set by Jenkins at build time to the running Inbucket container, but
 ARG VITE_ENV='production'
