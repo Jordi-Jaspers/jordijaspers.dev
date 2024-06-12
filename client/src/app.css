@@ -3,143 +3,141 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 20 14.3% 4.1%;
-        --card: 0 0% 100%;
-        --card-foreground: 20 14.3% 4.1%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 20 14.3% 4.1%;
-        --primary: 47.9 95.8% 53.1%;
-        --primary-foreground: 26 83.3% 14.1%;
-        --secondary: 60 4.8% 95.9%;
-        --secondary-foreground: 24 9.8% 10%;
-        --muted: 60 4.8% 95.9%;
-        --muted-foreground: 25 5.3% 44.7%;
-        --accent: 0 12.2% 91.96%;
-        --accent-foreground: 24 9.8% 10%;
-        --destructive: 0 72.22% 50.59%;
-        --destructive-foreground: 60 9.1% 97.8%;
-        --border: 20 5.9% 90%;
-        --input: 20 5.9% 90%;
-        --ring: 20 14.3% 4.1%;
-        --radius: 1rem;
-    }
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 20 14.3% 4.1%;
+		--card: 0 0% 100%;
+		--card-foreground: 20 14.3% 4.1%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 20 14.3% 4.1%;
+		--primary: 47.9 95.8% 53.1%;
+		--primary-foreground: 26 83.3% 14.1%;
+		--secondary: 60 4.8% 95.9%;
+		--secondary-foreground: 24 9.8% 10%;
+		--muted: 60 4.8% 95.9%;
+		--muted-foreground: 25 5.3% 44.7%;
+		--accent: 0 12.2% 91.96%;
+		--accent-foreground: 24 9.8% 10%;
+		--destructive: 0 72.22% 50.59%;
+		--destructive-foreground: 60 9.1% 97.8%;
+		--border: 20 5.9% 90%;
+		--input: 20 5.9% 90%;
+		--ring: 20 14.3% 4.1%;
+		--radius: 1rem;
+	}
 
-    .dark {
-        --background: 20 14.3% 4.1%;
-        --foreground: 60 9.1% 97.8%;
-        --card: 20 14.3% 4.1%;
-        --card-foreground: 60 9.1% 97.8%;
-        --popover: 20 14.3% 4.1%;
-        --popover-foreground: 60 9.1% 97.8%;
-        --primary: 47.9 95.8% 53.1%;
-        --primary-foreground: 26 83.3% 14.1%;
-        --secondary: 12 6.5% 15.1%;
-        --secondary-foreground: 60 9.1% 97.8%;
-        --muted: 12 6.5% 15.1%;
-        --muted-foreground: 24 5.4% 63.9%;
-        --accent: 215 15.38% 15.29%;
-        --accent-foreground: 60 9.1% 97.8%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 60 9.1% 97.8%;
-        --border: 12 6.5% 15.1%;
-        --input: 12 6.5% 15.1%;
-        --ring: 35.5 91.7% 32.9%;
-    }
+	.dark {
+		--background: 20 14.3% 4.1%;
+		--foreground: 60 9.1% 97.8%;
+		--card: 20 14.3% 4.1%;
+		--card-foreground: 60 9.1% 97.8%;
+		--popover: 20 14.3% 4.1%;
+		--popover-foreground: 60 9.1% 97.8%;
+		--primary: 47.9 95.8% 53.1%;
+		--primary-foreground: 26 83.3% 14.1%;
+		--secondary: 12 6.5% 15.1%;
+		--secondary-foreground: 60 9.1% 97.8%;
+		--muted: 12 6.5% 15.1%;
+		--muted-foreground: 24 5.4% 63.9%;
+		--accent: 215 15.38% 15.29%;
+		--accent-foreground: 60 9.1% 97.8%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 60 9.1% 97.8%;
+		--border: 12 6.5% 15.1%;
+		--input: 12 6.5% 15.1%;
+		--ring: 35.5 91.7% 32.9%;
+	}
 }
 
 @layer base {
-    @font-face {
-        font-family: Moranga;
-        src: url('/fonts/Moranga.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-    }
+	@font-face {
+		font-family: Moranga;
+		src: url('/fonts/Moranga.otf') format('opentype');
+		font-weight: normal;
+		font-style: normal;
+	}
 
-    @font-face {
-        font-family: Silka Regular;
-        src: url('/fonts/Silka-Medium.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
+	@font-face {
+		font-family: Silka Regular;
+		src: url('/fonts/Silka-Medium.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+	}
 
-    * {
-        @apply border-border;
-    }
+	* {
+		@apply border-border;
+	}
 
-    body {
-        @apply bg-background text-foreground;
-    }
+	body {
+		@apply bg-background text-foreground;
+	}
 
-    .regular-text {
-        @apply font-montserrat;
-    }
+	.regular-text {
+		@apply font-montserrat;
+	}
 
-    .tab-button {
-        @apply flex-1 text-sm font-medium h-8 px-4 rounded-2xl whitespace-nowrap focus-visible:outline-none focus-visible:ring focus-visible:bg-background transition-colors duration-150 ease-in-out;
-    }
+	.tab-button {
+		@apply h-8 flex-1 whitespace-nowrap rounded-2xl px-4 text-sm font-medium transition-colors duration-150 ease-in-out focus-visible:bg-background focus-visible:outline-none focus-visible:ring;
+	}
 
-    .tab-indicator {
-        transition: all 300ms cubic-bezier(0.65, 0, 0.35, 1);
-    }
+	.tab-indicator {
+		transition: all 300ms cubic-bezier(0.65, 0, 0.35, 1);
+	}
 
-    .map-button {
-        @apply z-[10] absolute m-2 h-10 w-10 bg-background rounded-full overflow-hidden justify-center;
-    }
+	.map-button {
+		@apply absolute z-[10] m-2 h-10 w-10 justify-center overflow-hidden rounded-full bg-background;
+	}
 
-    .map-button-shadow {
-        box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 2px;
-        transition: box-shadow 0.2s ease-in-out 0s;
-    }
+	.map-button-shadow {
+		box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 2px;
+		transition: box-shadow 0.2s ease-in-out 0s;
+	}
 
-    .map-button-shadow:hover {
-        cursor: pointer;
-        box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 5px;
-    }
+	.map-button-shadow:hover {
+		cursor: pointer;
+		box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 5px;
+	}
 
-    .grid-item {
-        @apply p-8 bg-background dark:bg-[#090c10] rounded-3xl border-4 border-transparent dark:border-accent shadow-md hover:shadow-xl transition-shadow duration-1000 ease-in-out overflow-hidden;
-    }
+	.grid-item {
+		@apply overflow-hidden rounded-3xl border-4 border-transparent bg-background p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl dark:border-accent dark:bg-[#090c10];
+	}
 
-    .grid-item-preview {
-        @apply p-4 bg-accent rounded-3xl shadow-md border-4 border-transparent dark:border-accent transition-all duration-300 ease-in-out;
-    }
+	.grid-item-preview {
+		@apply rounded-3xl border-4 border-transparent bg-accent p-4 shadow-md transition-all duration-300 ease-in-out dark:border-accent;
+	}
 
-    .link-button {
-        @apply z-[10] absolute m-2 h-8 w-8 bg-background rounded-full overflow-hidden justify-between;
-    }
+	.link-button {
+		@apply absolute z-[10] m-2 h-8 w-8 justify-between overflow-hidden rounded-full bg-background;
+	}
 
-    .link-button-hover:hover {
-        cursor: pointer;
-        box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 5px;
-        width: 6rem;
-    }
+	.link-button-hover:hover {
+		cursor: pointer;
+		box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 5px;
+		width: 6rem;
+	}
 
-    .link-button-hover {
-        box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 2px;
-        transition: all 300ms cubic-bezier(0.65, 0, 0.35, 1);
-    }
+	.link-button-hover {
+		box-shadow: theme('colors.accent.DEFAULT') 0px 0px 0px 2px;
+		transition: all 300ms cubic-bezier(0.65, 0, 0.35, 1);
+	}
 
-    .infinite-x-scroll {
-        @apply animate-infinite-x-scroll
-    }
+	.infinite-x-scroll {
+		@apply animate-infinite-x-scroll;
+	}
 
-    .infinite-x-scroll-reverse {
-        @apply animate-infinite-x-scroll-reverse
-    }
+	.infinite-x-scroll-reverse {
+		@apply animate-infinite-x-scroll-reverse;
+	}
 
-    .infinite-y-scroll {
-        @apply animate-infinite-y-scroll
-    }
+	.infinite-y-scroll {
+		@apply animate-infinite-y-scroll;
+	}
 
-    .pause {
-        animation-play-state: paused;
-    }
+	.pause {
+		animation-play-state: paused;
+	}
 
-    .rainbow-text {
-        @apply bg-gradient-to-r from-blue-600 via-25% via-primary to-85% to-red-600 inline-block bg-clip-text text-transparent;
-    }
+	.rainbow-text {
+		@apply inline-block bg-gradient-to-r from-blue-600 via-primary via-25% to-red-600 to-85% bg-clip-text text-transparent;
+	}
 }
-
-

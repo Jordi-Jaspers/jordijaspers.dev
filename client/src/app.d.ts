@@ -1,4 +1,4 @@
-import type {ComponentType} from "svelte";
+import type { ComponentType } from 'svelte';
 
 declare global {
 	namespace App {
@@ -30,23 +30,13 @@ declare global {
 		category: string[];
 		border: boolean;
 
-		constructor(
-			id: string,
-			x: number,
-			y: number,
-			w: number,
-			h: number,
-			component: ComponentType,
-			category: string[],
-			border: boolean
-		) {
+		constructor(id: string, x: number, y: number, w: number, h: number, component: ComponentType, category: string[], border: boolean) {
 			super(id, x, y, w, h);
 			this.component = component;
 			this.category = category;
 			this.border = border;
 		}
 	}
-
 }
 
 export {};

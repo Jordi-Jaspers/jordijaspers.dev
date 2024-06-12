@@ -1,6 +1,6 @@
 import { type Writable, writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import {toast} from "svelte-sonner";
+import { toast } from 'svelte-sonner';
 
 class LocalStorage<T> {
 	key: string;

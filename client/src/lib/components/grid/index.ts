@@ -7,13 +7,4 @@ import ResumeTile from './resume-tile.svelte';
 import LinkedInTile from './linkedin-tile.svelte';
 import TechStackTile from './tech-stack-tile.svelte';
 
-export {
-    IntroductionTile,
-    MapTile,
-    SpotifyTile,
-    GithubTile,
-    AniflixTile,
-    ResumeTile,
-    LinkedInTile,
-    TechStackTile
-};
+export { IntroductionTile, MapTile, SpotifyTile, GithubTile, AniflixTile, ResumeTile, LinkedInTile, TechStackTile };
