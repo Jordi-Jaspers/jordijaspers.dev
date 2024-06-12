@@ -1,0 +1,35 @@
+name: portfolio release
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  build-client:
+    name: Build client
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          version: latest
+
+      - name: Docker Build & Push Action
+        uses: mr-smithers-excellent/docker-build-push@v6.4
+        with:
+          image: ${{ secrets.REGISTRY_URL }}
+          registry: docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          buildArgs: VITE_ENV=production,VITE_PORT=3000
+
+          addLatest: true
+          directory: ./client
+          dockerfile: ./client/Dockerfile
+
+          multiPlatform: true
+          platform: linux/amd64,linux/arm64

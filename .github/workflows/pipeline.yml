@@ -5,13 +5,11 @@ on:
     branches: [ master, develop ]
   pull_request:
     branches: [ develop ]
-  release:
-    types: [ published ]
 
 jobs:
   build:
     name: Build portfolio
-    runs-on: ubuntu-
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./client
