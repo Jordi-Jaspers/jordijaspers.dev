@@ -1,8 +1,8 @@
 <script lang="ts">
-	import {type Writable, writable} from 'svelte/store';
+	import { type Writable, writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { activeTab } from '$lib/components/store/localstorage.ts';
-	import {browser} from "$app/environment";
+	import { browser } from '$app/environment';
 
 	let width: Writable<number> = writable(0);
 	let windowWidth: Writable<number> = writable(0);
@@ -31,7 +31,9 @@
 
 <nav
 	id="nav-bar"
-	class="mx-auto mb-4 flex h-32 items-center space-y-4 {$windowWidth > 844 ? 'my-0 flex-row justify-between max-w-[1200px] px-[3.5vw]' : 'flex-col justify-center max-w-screen'}  "
+	class="mx-auto mb-4 flex h-32 items-center space-y-4 {$windowWidth > 844
+		? 'my-0 max-w-[1200px] flex-row justify-between px-[3.5vw]'
+		: 'max-w-screen flex-col justify-center'}  "
 >
 	<h1 class="rainbow-text px-2 font-moranga text-3xl font-semibold">Jordijaspers.dev</h1>
 
