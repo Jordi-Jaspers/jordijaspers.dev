@@ -23,7 +23,8 @@ const desktopLayout: GridObject[] = [
 	{ id: 'grid-item-6', x: 1, y: 3, w: 1, h: 2, component: AniflixTile, border: true, category: ['projects'] },
 	{ id: 'grid-item-7', x: 0, y: 4, w: 1, h: 2, component: TechStackTile, border: true, category: ['about'] },
 	{ id: 'grid-item-8', x: 2, y: 3, w: 2, h: 2, component: ResumeTile, border: true, category: ['about'] },
-	{ id: 'grid-item-9', x: 0, y: 3, w: 1, h: 1, component: LinkedInTile, border: true, category: ['about'] }
+	{ id: 'grid-item-9', x: 0, y: 3, w: 1, h: 1, component: LinkedInTile, border: true, category: ['about'] },
+	{ id: 'grid-item-10', x: 0, y: 5, w: 4, h: 4, component: LinkedInTile, border: true, category: ['about'] }
 ];
 
 const mobileLayout: GridObject[] = [

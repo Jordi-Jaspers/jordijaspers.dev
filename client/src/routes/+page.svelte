@@ -1,167 +1,180 @@
 <script lang="ts">
-	import Navigation from '$lib/components/navigation';
-	import type { GridController } from 'svelte-grid-extended';
-	import { Grid, GridItem } from 'svelte-grid-extended';
-	import { writable, type Writable } from 'svelte/store';
-	import { onDestroy, onMount } from 'svelte';
-	import { browser } from '$app/environment';
-	import { Grip } from 'lucide-svelte';
-	import { activeTab } from '$lib/components/store/localstorage.ts';
+    import Navigation from '$lib/components/navigation';
+    import type {GridController} from 'svelte-grid-extended';
+    import {Grid, GridItem} from 'svelte-grid-extended';
+    import {writable, type Writable} from 'svelte/store';
+    import {onDestroy, onMount} from 'svelte';
+    import {browser} from '$app/environment';
+    import {Grip} from 'lucide-svelte';
+    import {activeTab} from '$lib/components/store/localstorage.ts';
 
-	export let data;
-	const fraction: number = 164;
-	const maxWidth: number = 800;
-	const itemSize = { width: fraction, height: fraction };
+    export let data;
+    const fraction: number = 164;
+    const itemSize = {width: fraction, height: fraction};
 
-	// create deep copies as backup
-	const mobileCoordinates: Coordinates[] = data.mobileLayout.map((obj) => {
-		return { ...obj };
-	});
-	const desktopCoordinates: Coordinates[] = data.desktopLayout.map((obj) => {
-		return { ...obj };
-	});
+    // create deep copies as backup
+    const mobileCoordinates: Coordinates[] = data.mobileLayout.map((obj) => {
+        return {...obj};
+    });
+    const desktopCoordinates: Coordinates[] = data.desktopLayout.map((obj) => {
+        return {...obj};
+    });
 
-	let interval: Timer;
-	let controller: GridController;
-	let items: Writable<GridObject[]> = writable([]);
-	let previousCols: Writable<number> = writable(2);
-	let cols: Writable<number> = writable(4);
-	let rows: Writable<number> = writable(10);
+    let interval: Timer;
+    let controller: GridController;
 
-	function compressGrid(): void {
-		if (!controller) return;
-		controller.compress();
-	}
+    let hovering: Writable<boolean> = writable(false);
+    let maxHeight: Writable<number> = writable(0);
+    let maxWidth: Writable<number> = writable(0);
 
-	function resetGrid(): void {
-		$items = $items.map((item) => {
-			let coordinates: Coordinates[] = $cols > 2 ? desktopCoordinates : mobileCoordinates;
-			let index = coordinates.findIndex((obj) => obj.id === item.id);
-			item.x = coordinates[index].x;
-			item.y = coordinates[index].y;
-			item.w = coordinates[index].w;
-			item.h = coordinates[index].h;
-			return item;
-		});
-		compressGrid();
-	}
+    let items: Writable<GridObject[]> = writable([]);
+    let previousCols: Writable<number> = writable(2);
+    let cols: Writable<number> = writable(4);
+    let rows: Writable<number> = writable(10);
 
-	function updateGrid() {
-		$previousCols = $cols;
-		$cols = window.innerWidth >= maxWidth ? 4 : 2;
+    function compressGrid(): void {
+        if (!controller) return;
+        controller.compress();
+    }
 
-		const maxHeight = window.innerHeight;
-		const newRows: number = Math.floor(maxHeight / fraction);
-		rows.set(newRows < 1 ? 1 : newRows);
+    function resetGrid(): void {
+        $items = $items.map((item) => {
+            let coordinates: Coordinates[] = $cols > 2 ? desktopCoordinates : mobileCoordinates;
+            let index = coordinates.findIndex((obj) => obj.id === item.id);
+            item.x = coordinates[index].x;
+            item.y = coordinates[index].y;
+            item.w = coordinates[index].w;
+            item.h = coordinates[index].h;
+            return item;
+        });
+        compressGrid();
+    }
 
-		$items = $cols > 2 ? data.desktopLayout : data.mobileLayout;
-		resetGrid();
-	}
+    function updateGrid() {
+        const width = 844;
+        $previousCols = $cols;
+        $cols = window.innerWidth >= width ? 4 : 2;
 
-	onMount(() => {
-		interval = setInterval(compressGrid, 100);
-		if (browser) {
-			updateGrid();
-			window.addEventListener('resize', updateGrid);
-		}
-	});
+        const height = window.innerHeight;
+        const newRows: number = Math.floor(height / fraction);
+        rows.set(newRows < 1 ? 1 : newRows);
 
-	onDestroy(() => {
-		if (browser) {
-			window.removeEventListener('resize', updateGrid);
-		}
-		clearInterval(interval);
-	});
+        $items = $cols > 2 ? data.desktopLayout : data.mobileLayout;
+        resetGrid();
+    }
 
-	activeTab.subscribe((value) => {
-		if (!browser) return;
+    onMount(() => {
+        interval = setInterval(compressGrid, 100);
+        if (browser) {
+            updateGrid();
+            window.addEventListener('resize', updateGrid);
+        }
+    });
 
-		resetGrid();
-		if (value === 'all') return;
+    onDestroy(() => {
+        if (browser) {
+            window.removeEventListener('resize', updateGrid);
+        }
+        clearInterval(interval);
+    });
 
-		// Filter active and inactive items
-		let activeItems = $items.filter((item) => item.category.includes(value));
-		let inactiveItems = $items.filter((item) => !item.category.includes(value));
-		$items = placeItems(activeItems.concat(inactiveItems));
-	});
+    activeTab.subscribe((value) => {
+        if (!browser) return;
 
-	function placeItems(items: GridObject[]): GridObject[] {
-		const occupiedCells = new Set<string>();
+        resetGrid();
+        if (value === 'all') return;
 
-		function canPlaceObject(x: number, y: number, obj: GridObject): boolean {
-			for (let i = 0; i < obj.w; i++) {
-				for (let j = 0; j < obj.h; j++) {
-					if (occupiedCells.has(`${x + i},${y + j}`)) {
-						return false;
-					}
-				}
-			}
-			return true;
-		}
+        // Filter active and inactive items
+        let activeItems = $items.filter((item) => item.category.includes(value));
+        let inactiveItems = $items.filter((item) => !item.category.includes(value));
+        $items = placeItems(activeItems.concat(inactiveItems));
+    });
 
-		function placeObject(x: number, y: number, obj: GridObject): void {
-			obj.x = x;
-			obj.y = y;
-			for (let i = 0; i < obj.w; i++) {
-				for (let j = 0; j < obj.h; j++) {
-					occupiedCells.add(`${x + i},${y + j}`);
-				}
-			}
-		}
+    function placeItems(items: GridObject[]): GridObject[] {
+        const occupiedCells = new Set<string>();
 
-		let currentY = 0;
+        function canPlaceObject(x: number, y: number, obj: GridObject): boolean {
+            for (let i = 0; i < obj.w; i++) {
+                for (let j = 0; j < obj.h; j++) {
+                    if (occupiedCells.has(`${x + i},${y + j}`)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
-		for (const obj of items) {
-			let placed = false;
+        function placeObject(x: number, y: number, obj: GridObject): void {
+            obj.x = x;
+            obj.y = y;
+            for (let i = 0; i < obj.w; i++) {
+                for (let j = 0; j < obj.h; j++) {
+                    occupiedCells.add(`${x + i},${y + j}`);
+                }
+            }
+        }
 
-			for (let y = currentY; !placed; y++) {
-				for (let x = 0; x <= $cols - obj.w; x++) {
-					if (canPlaceObject(x, y, obj)) {
-						placeObject(x, y, obj);
-						placed = true;
-						break;
-					}
-				}
-			}
-		}
+        let currentY = 0;
 
-		return items;
-	}
+        for (const obj of items) {
+            let placed = false;
+
+            for (let y = currentY; !placed; y++) {
+                for (let x = 0; x <= $cols - obj.w; x++) {
+                    if (canPlaceObject(x, y, obj)) {
+                        placeObject(x, y, obj);
+                        placed = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return items;
+    }
+
+    $: if ($items || $cols) {
+        let maxY = 0;
+        $items.forEach((item) => {
+            if (item.y + item.h > maxY) {
+                maxY = item.y + item.h;
+            }
+        });
+
+        let overhead: number = $cols > 2 ? 16 : 8;
+        $maxHeight = maxY * fraction + (16 * maxY) - overhead;
+        $maxWidth = $cols * fraction + (16 * $cols) - overhead;
+    }
 </script>
 
-<svelte:head>
-	<title>Jordi Jaspers</title>
-	<meta
-		name="description"
-		content="Welcome to Jordi Jaspers' web portfolio. With over 5 years of experience in software development, specializing in Spring Boot and DevOps, Jordi delivers efficient and elegant solutions. Discover his projects, expertise, and how he can help bring your software ideas to life."
-	/>
-</svelte:head>
+<div class="relative w-full h-full">
+    <Navigation/>
+    <div class="mx-auto flex min-h-screen max-w-screen" style="width: {$maxWidth}px; height: {$maxHeight}px;">
+        <Grid cols={$cols} rows={$rows} bounds={true} {itemSize} collision="push" bind:controller>
+            {#each $items as {id, x, y, w, h, component, border, category} (id)}
+                <GridItem
+                        {id}
+                        bind:x
+                        bind:y
+                        bind:w
+                        bind:h
+                        resizable={false}
+                        previewClass="grid-item-preview"
+                        activeClass="cursor-grabbing"
+                        class="!z-[1] grid-item mr-[16px] mb-[16px] {!border && 'border-none'} {category.includes($activeTab) || $activeTab === 'all' ? 'opacity-100' : 'opacity-50'}"
+                >
+                    <div slot="moveHandle" let:moveStart on:pointerover={() => $hovering = true} on:pointerout={() => $hovering = false}>
+                        <div class="absolute right-0 top-0 !z-[10] m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
+                            <Grip class="h-full w-full cursor-grab p-2"/>
+                        </div>
+                    </div>
 
-<Navigation />
-<div class="mx-auto mb-20 flex h-full min-h-screen min-w-[375px] max-w-[800px]" style="width: {$cols > 2 ? 800 : 375}px;">
-	<Grid class="grid-container" cols={$cols} rows={$rows} bounds={true} {itemSize} collision="push" gap={16} bind:controller>
-		{#each $items as { id, x, y, w, h, component, border, category } (id)}
-			<GridItem
-				{id}
-				bind:x
-				bind:y
-				bind:w
-				bind:h
-				resizable={false}
-				previewClass="grid-item-preview"
-				activeClass="cursor-grabbing"
-				class="grid-item {!border && 'border-none'} {category.includes($activeTab) || $activeTab === 'all' ? 'opacity-100' : 'opacity-50'}"
-			>
-				<div slot="moveHandle" let:moveStart>
-					<div class="absolute right-0 top-0 !z-[10] m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
-						<Grip class="h-full w-full cursor-grab p-2" />
-					</div>
-				</div>
-
-				{#if component}
-					<svelte:component this={component} />
-				{/if}
-			</GridItem>
-		{/each}
-	</Grid>
+                    {#if component}
+                        <svelte:component this={component}/>
+                    {/if}
+                </GridItem>
+            {/each}
+        </Grid>
+    </div>
 </div>
+

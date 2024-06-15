@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
+	import {type Writable, writable} from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { activeTab } from '$lib/components/store/localstorage.ts';
+	import {browser} from "$app/environment";
 
-	let width = writable(0);
-	let left = writable(0);
+	let width: Writable<number> = writable(0);
+	let windowWidth: Writable<number> = writable(0);
+	let left: Writable<number> = writable(0);
 
 	function updateTabIndicator(tabIndex: string) {
 		$activeTab = tabIndex;
@@ -15,16 +17,23 @@
 		}
 	}
 
+	function updateWidth() {
+		$windowWidth = window.innerWidth;
+	}
+
 	onMount(() => {
 		updateTabIndicator('all');
+		if (browser) {
+			window.addEventListener('resize', updateWidth);
+		}
 	});
 </script>
 
 <nav
 	id="nav-bar"
-	class="mx-auto my-4 flex h-32 min-w-[375px] max-w-[1200px] flex-col items-center justify-center space-y-4 px-[3.5vw] md:my-0 md:flex-row md:justify-between"
+	class="mx-auto mb-4 flex h-32 items-center space-y-4 {$windowWidth > 844 ? 'my-0 flex-row justify-between max-w-[1200px] px-[3.5vw]' : 'flex-col justify-center max-w-screen'}  "
 >
-	<h1 class="rainbow-text px-2 font-moranga text-3xl font-semibold">jordijaspers.dev</h1>
+	<h1 class="rainbow-text px-2 font-moranga text-3xl font-semibold">Jordijaspers.dev</h1>
 
 	<div id="navigation" class="relative z-0 flex rounded-full border-2 bg-accent px-1 py-1 dark:bg-transparent">
 		<div
