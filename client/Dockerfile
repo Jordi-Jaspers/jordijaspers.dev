@@ -12,7 +12,7 @@ RUN mkdir -p /temp/workspace
 WORKDIR /temp/workspace
 
 # Copy the necessary files to the temp directory
-COPY package.json bun.lockb /temp/workspace/
+COPY package.json /temp/workspace/
 
 # Install dependencies into temp directory
 # this will cache them and speed up future builds
