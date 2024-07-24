@@ -1,6 +1,6 @@
 {
 	"name": "jordijaspers.dev",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"private": false,
 	"engines": {
 		"node": ">=20.10.0 <21.0.0",
