@@ -39,5 +39,5 @@ COPY --from=builder /temp/workspace/node_modules ./node_modules
 # Expose the port the application will run on
 EXPOSE 3000
 
-#Start the BUN server
-CMD ["bun", "run", "dev"]
+# Start the BUN server on port 3000
+CMD ["bun", "run", "dev", "--port", "3000"]
