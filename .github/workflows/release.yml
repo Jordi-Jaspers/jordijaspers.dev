@@ -25,7 +25,6 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          buildArgs: VITE_ENV=production,VITE_PORT=3000
 
           addLatest: true
           directory: ./client

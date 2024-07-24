@@ -12,10 +12,6 @@ WORKDIR /workspace
 # Copy all the application files to the container
 COPY .. .
 
-# These are build arguments that will be set by Jenkins at build time to the running Inbucket container, but
-ARG VITE_ENV='production'
-ARG VITE_PORT=3000
-
 # Run your build process
 RUN bun install --frozen-lockfile && bun run build
 
@@ -23,14 +19,14 @@ RUN bun install --frozen-lockfile && bun run build
 FROM oven/bun
 
 # Default environment variables, these can be overwritten when calling "docker run"
-ENV VITE_ENV=$VITE_ENV \
-    VITE_PORT=$VITE_PORT
+ENV VITE_ENV='production' \
+    VITE_PORT=3000
 
 # Copy only the necessary files from the builder image to the final image
 COPY --from=builder /workspace/build .
 
 # Expose the port the application will run on
-EXPOSE $VITE_PORT
+EXPOSE 3000
 
 #Start the BUN server
 CMD ["bun", "run", "start"]
