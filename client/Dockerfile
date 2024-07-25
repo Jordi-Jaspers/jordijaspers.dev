@@ -10,13 +10,14 @@ FROM base AS builder
 
 # Create a temp directory for the node_modules
 RUN mkdir -p /temp/workspace
+RUN mkdir -p /temp/workspace/build
 WORKDIR /temp/workspace
 
 # Copy the necessary files to the temp directory
 COPY . /temp/workspace/
 
 # Install dependencies into temp directory
-RUN bun install
+RUN bun install --frozen-lockfile
 RUN bun run build
 
 # STEP 3: Create a smaller image for running the application
