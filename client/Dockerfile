@@ -36,4 +36,4 @@ COPY --from=builder /temp/workspace/build .
 EXPOSE 3000
 
 #Start the BUN server
-ENTRYPOINT [ "bun", "run", "index.js" ]
+ENTRYPOINT [ "bun", "run", "start" ]
