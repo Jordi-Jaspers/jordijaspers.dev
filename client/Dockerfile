@@ -17,7 +17,7 @@ WORKDIR /temp/workspace
 COPY . /temp/workspace/
 
 # Install dependencies into temp directory
-RUN bun install --frozen-lockfile
+RUN bun install
 RUN bun run build
 
 # STEP 3: Create a smaller image for running the application
