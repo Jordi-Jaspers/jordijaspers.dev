@@ -29,5 +29,3 @@ jobs:
           addLatest: true
           directory: ./client
           dockerfile: ./client/Dockerfile
-
-          platform: linux/amd64
