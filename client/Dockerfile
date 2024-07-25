@@ -36,4 +36,4 @@ COPY --from=builder /temp/workspace/build .
 EXPOSE 3000
 
 #Start the BUN server
-ENTRYPOINT [ "bun", "run", "start" ]
+CMD [ "bun", "run", "start" ]
