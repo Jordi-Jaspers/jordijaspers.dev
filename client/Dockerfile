@@ -1,6 +1,6 @@
 # STEP 1: Define the base image for the application
 # Bun version 1.1.x does not work with the MapGL component, so we need to use version 1.0.36
-FROM oven/bun:1.0.36 AS base
+FROM oven/bun:latest AS base
 
 LABEL description="The portfolio website of Jordi Jaspers."
 LABEL maintainer="Jordi Jaspers"
@@ -35,5 +35,5 @@ COPY --from=builder /temp/workspace/build .
 # Expose the port the application will run on
 EXPOSE 3000
 
-#Start the BUN server
+# Start the BUN server
 CMD [ "bun", "run", "start" ]
