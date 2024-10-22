@@ -5,7 +5,6 @@
 	import { browser } from '$app/environment';
 
 	let width: Writable<number> = writable(0);
-	let windowWidth: Writable<number> = writable(0);
 	let left: Writable<number> = writable(0);
 
 	function updateTabIndicator(tabIndex: string) {
@@ -17,25 +16,13 @@
 		}
 	}
 
-	function updateWidth() {
-		$windowWidth = window.innerWidth;
-	}
-
 	onMount(() => {
 		updateTabIndicator('all');
-		if (browser) {
-			window.addEventListener('resize', updateWidth);
-		}
 	});
 </script>
 
-<nav
-	id="nav-bar"
-	class="mx-auto mb-4 flex h-32 items-center space-y-4 {$windowWidth > 844
-		? 'my-0 max-w-[1200px] flex-row justify-between px-[3.5vw]'
-		: 'max-w-screen flex-col justify-center'}  "
->
-	<h1 class="rainbow-text px-2 font-moranga text-3xl font-semibold">Jordijaspers.dev</h1>
+<nav id="nav-bar">
+	<h1 class="rainbow-text px-2 font-moranga text-3xl font-semibold">Jordi</h1>
 
 	<div id="navigation" class="relative z-0 flex rounded-full border-2 bg-accent px-1 py-1 dark:bg-transparent">
 		<div
