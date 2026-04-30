@@ -1,39 +1,65 @@
-# STEP 1: Define the base image for the application
-# Bun version 1.1.x does not work with the MapGL component, so we need to use version 1.0.36
-FROM oven/bun:latest AS base
+# syntax=docker/dockerfile:1
+# =============================================================================
+# JORDIJASPERS.DEV - SVELTEKIT WITH BUN
+# Multi-stage build: install → build → lean runtime
+#
+# Key decisions:
+#   - Alpine base: small image, no native glibc deps needed
+#   - BuildKit cache mounts on bun install for fast rebuilds
+#   - Selective COPY in build stage to avoid cache busting
+#   - svelte-adapter-bun produces self-contained build (no node_modules at runtime)
+# =============================================================================
+
+FROM oven/bun:1.2.17-alpine AS base
+WORKDIR /app
 
 LABEL description="The portfolio website of Jordi Jaspers."
 LABEL maintainer="Jordi Jaspers"
 
-# STEP 2: Create a builder image
-FROM base AS builder
+# ---------------------------------------------------------------------------
+# Stage 1: Install dependencies
+# ---------------------------------------------------------------------------
+FROM base AS install
 
-# Create a temp directory for the node_modules
-RUN mkdir -p /temp/workspace
-RUN mkdir -p /temp/workspace/build
-WORKDIR /temp/workspace
+COPY package.json bun.lockb ./
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install --frozen-lockfile
 
-# Copy the necessary files to the temp directory
-COPY . /temp/workspace/
+# ---------------------------------------------------------------------------
+# Stage 2: Build the SvelteKit application
+# ---------------------------------------------------------------------------
+FROM base AS build
 
-# Install dependencies into temp directory
-RUN bun install
+COPY --from=install /app/node_modules node_modules
+COPY package.json bun.lockb svelte.config.js tsconfig.json postcss.config.js tailwind.config.ts vite.config.ts ./
+COPY src/ src/
+COPY static/ static/
+
+ENV NODE_ENV=production
 RUN bun run build
 
-# STEP 3: Create a smaller image for running the application
-FROM base AS release
-RUN mkdir -p /app
+# ---------------------------------------------------------------------------
+# Stage 3: Minimal production image
+# ---------------------------------------------------------------------------
+FROM base AS runtime
+
+# Create non-root user (UID/GID 1001)
+RUN addgroup --system --gid 1001 appgroup && \
+    adduser --system --uid 1001 --ingroup appgroup appuser
+
 WORKDIR /app
 
-# Default environment variables, these can be overwritten when calling "docker run"
 ENV VITE_ENV='production' \
     VITE_PORT=3000
 
-# Copy the necessary files to the app directory
-COPY --from=builder /temp/workspace/build .
+# Copy only the self-contained build output (svelte-adapter-bun bundles everything)
+COPY --from=build --chown=appuser:appgroup /app/build .
 
-# Expose the port the application will run on
 EXPOSE 3000
 
-# Start the BUN server
-CMD [ "bun", "run", "start" ]
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 --start-period=10s \
+    CMD bun -e "await fetch('http://localhost:3000').then(r => { if (!r.ok) process.exit(1) })" || exit 1
+
+USER appuser
+
+CMD ["bun", "./index.js"]

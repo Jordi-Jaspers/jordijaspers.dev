@@ -33,6 +33,7 @@ Personal portfolio website — single-page SvelteKit app with draggable bento-gr
 
 ```
 jordijaspers.dev/
+├── mise.toml                  # Pinned tool versions (Bun, Node) — single source of truth
 ├── client/                    # SvelteKit application (all code here)
 │   ├── src/
 │   │   ├── routes/            # Single page (+page.svelte, +layout.svelte)
