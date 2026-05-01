@@ -4,24 +4,25 @@
 
 ## Configuration
 
-| Setting | Value | Description |
-|---------|-------|-------------|
-| `screenshot_tests_enabled` | `true` | Enable UI validation loop |
+| Setting | Value   | Description |
+|---------|---------|-------------|
+| `screenshot_tests_enabled` | `false` | Enable UI validation loop |
 
 ## Tech Stack
 
 | Type | Technology | Version |
 |------|------------|---------|
 | Language | TypeScript | ~5.x |
-| Framework | SvelteKit | ^2.7.2 |
-| UI Library | Svelte | ^4.2.19 |
-| CSS | Tailwind CSS | ^3.x |
-| UI Primitives | shadcn-svelte (bits-ui) | ^0.21.16 |
-| Icons | lucide-svelte | ^0.390.0 |
+| Framework | SvelteKit | ^2.x |
+| UI Library | Svelte | ^5.x |
+| CSS | Tailwind CSS | ^4.x (@tailwindcss/vite) |
+| UI Primitives | shadcn-svelte (bits-ui) | ^2.x |
+| Icons | lucide-svelte | latest |
 | Runtime | Bun | latest |
 | Maps | mapbox-gl | ^3.7.0 |
-| Grid | svelte-grid-extended | ^1.2.1 |
-| Dark Mode | mode-watcher | ^0.3.1 |
+| Grid | CSS Grid + custom pointer-event drag | - |
+| Dark Mode | mode-watcher | latest |
+| DnD | svelte-dnd-action | latest |
 
 ## Architecture
 

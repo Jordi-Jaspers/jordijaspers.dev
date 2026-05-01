@@ -1,65 +1,62 @@
 <script lang="ts">
-	import { writable, type Writable } from 'svelte/store';
 	import mapboxgl from 'mapbox-gl';
-	import { onDestroy, onMount } from 'svelte';
-	import { isDarkMode } from '$lib/components/store/localstorage.ts';
+	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 	import { Minus, Plus } from 'lucide-svelte';
 	import Profile from '$lib/images/profile_picture_3.webp?enhanced';
 
-	// https://dev.to/samuelearl/building-a-geospacial-app-with-sveltekit-deckgl-and-mapbox-part-1-start-with-a-map-59lh
-	const accessToken = 'pk.eyJ1IjoibmV2Zmx5bm4iLCJhIjoiY2ttcTJlbHptMms0cjJ2cW9uaGxxNjI0NSJ9.RJAjJtHGrGB43W_XaylAnA';
+	import { env } from '$lib/config/env';
 
-	let map: mapboxgl.Map;
-	let mapContainer: HTMLDivElement;
-	let mapStyle: Writable<string> = writable('mapbox://styles/mapbox/navigation-guidance-night-v4');
-	let longitude: Writable<number> = writable(5.68889);
-	let latitude: Writable<number> = writable(50.84833);
-	let zoom: Writable<number> = writable(8);
+	const accessToken = env.mapbox.accessToken;
 
-	function incrementZoom() {
-		if ($zoom > 10) return;
-		$zoom += 3;
+	let map: mapboxgl.Map | undefined = $state();
+	let mapContainer: HTMLDivElement = $state()!;
+	let zoom: number = $state(8);
+	const longitude: number = 5.68889;
+	const latitude: number = 50.84833;
+
+	let mapStyle = $derived(
+		isDarkMode.value
+			? 'mapbox://styles/mapbox/navigation-guidance-night-v4'
+			: 'mapbox://styles/mapbox/navigation-guidance-day-v4'
+	);
+
+	function incrementZoom(): void {
+		if (zoom > 10) return;
+		zoom += 3;
 	}
 
-	function decrementZoom() {
-		if ($zoom < 2) return;
-		$zoom -= 3;
+	function decrementZoom(): void {
+		if (zoom < 2) return;
+		zoom -= 3;
 	}
 
-	onMount(() => {
-		map = new mapboxgl.Map({
-			accessToken: accessToken,
+	$effect(() => {
+		const m = new mapboxgl.Map({
+			accessToken,
 			container: mapContainer,
 			interactive: false,
-			style: $mapStyle,
-			center: [$longitude, $latitude],
-			zoom: $zoom,
+			style: mapStyle,
+			center: [longitude, latitude],
+			zoom,
 			pitch: 0,
 			bearing: 0
 		});
+		map = m;
+		return () => m.remove();
 	});
 
-	onDestroy(() => {
-		if (map) map.remove();
+	$effect(() => {
+		if (!map) return;
+		map.flyTo({ center: [longitude, latitude], zoom });
 	});
 
-	$: $isDarkMode
-		? ($mapStyle = 'mapbox://styles/mapbox/navigation-guidance-night-v4')
-		: ($mapStyle = 'mapbox://styles/mapbox/navigation-guidance-day-v4');
-
-	$: if (map && $longitude && $latitude && $zoom) {
-		map.flyTo({
-			center: [$longitude, $latitude],
-			zoom: $zoom
-		});
-	}
-
-	$: if (map && $mapStyle) {
-		map.setStyle($mapStyle);
-	}
+	$effect(() => {
+		if (!map) return;
+		map.setStyle(mapStyle);
+	});
 </script>
 
-<div bind:this={mapContainer} class="absolute inset-0 h-full w-full" />
+<div bind:this={mapContainer} class="absolute inset-0 h-full w-full"></div>
 
 <div class="group absolute inset-0 flex h-full w-full items-center justify-center bg-transparent">
 	<div
@@ -69,11 +66,11 @@
 	</div>
 </div>
 
-<button class="map-button map-button-shadow bottom-0 right-0 {$zoom > 10 && 'hidden'}" on:click={incrementZoom}>
+<button class="map-button map-button-shadow bottom-0 right-0 {zoom > 10 && 'hidden'}" onclick={incrementZoom}>
 	<Plus class="h-full w-full cursor-pointer p-2" />
 </button>
 
-<button class="map-button map-button-shadow bottom-0 left-0 {$zoom < 2 && 'hidden'}" on:click={decrementZoom}>
+<button class="map-button map-button-shadow bottom-0 left-0 {zoom < 2 && 'hidden'}" onclick={decrementZoom}>
 	<Minus class="h-full w-full cursor-grab p-2" />
 </button>
 

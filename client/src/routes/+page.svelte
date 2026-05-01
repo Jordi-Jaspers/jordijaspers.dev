@@ -1,181 +1,220 @@
 <script lang="ts">
 	import Navigation from '$lib/components/navigation';
-	import type { GridController } from 'svelte-grid-extended';
-	import { Grid, GridItem } from 'svelte-grid-extended';
-	import { writable, type Writable } from 'svelte/store';
-	import { onDestroy, onMount } from 'svelte';
+	import { activeTab } from '$lib/stores/localstorage.svelte';
 	import { browser } from '$app/environment';
+	import { untrack } from 'svelte';
 	import { Grip } from 'lucide-svelte';
-	import { activeTab } from '$lib/components/store/localstorage.ts';
 
-	export let data;
+	let { data } = $props();
+
 	const fraction: number = 164;
-	const itemSize = { width: fraction, height: fraction };
+	const gap: number = 16;
+	const unit: number = fraction + gap; // 180px per grid unit
 
-	// create deep copies as backup
-	const mobileCoordinates: Coordinates[] = data.mobileLayout.map((obj) => {
-		return { ...obj };
+	// Deep copies as fallback for reset — untrack: intentionally captures initial data value only
+	const mobileCoords: Coordinates[] = untrack(() =>
+		data.mobileLayout.map((obj: Coordinates) => ({ ...obj }))
+	);
+	const desktopCoords: Coordinates[] = untrack(() =>
+		data.desktopLayout.map((obj: Coordinates) => ({ ...obj }))
+	);
+
+	let cols: number = $state(4);
+	let items: GridObject[] = $state([]);
+
+	// Drag state
+	let draggingId: string | null = $state(null);
+	let dragStartClientX: number = 0;
+	let dragStartClientY: number = 0;
+	let dragOrigX: number = 0;
+	let dragOrigY: number = 0;
+
+	let maxHeight = $derived.by(() => {
+		let maxY = 0;
+		items.forEach((item) => {
+			if (item.y + item.h > maxY) maxY = item.y + item.h;
+		});
+		const overhead = cols > 2 ? 16 : 8;
+		return maxY * fraction + gap * maxY - overhead;
 	});
-	const desktopCoordinates: Coordinates[] = data.desktopLayout.map((obj) => {
-		return { ...obj };
+
+	let maxWidth = $derived.by(() => {
+		const overhead = cols > 2 ? 16 : 8;
+		return cols * fraction + gap * cols - overhead;
 	});
 
-	let interval: Timer;
-	let controller: GridController;
-
-	let hovering: Writable<boolean> = writable(false);
-	let maxHeight: Writable<number> = writable(0);
-	let maxWidth: Writable<number> = writable(0);
-
-	let items: Writable<GridObject[]> = writable([]);
-	let previousCols: Writable<number> = writable(2);
-	let cols: Writable<number> = writable(4);
-	let rows: Writable<number> = writable(10);
+	function getItemStyle(item: GridObject): string {
+		const left = item.x * unit;
+		const top = item.y * unit;
+		const width = item.w * fraction + (item.w - 1) * gap;
+		const height = item.h * fraction + (item.h - 1) * gap;
+		return `left: ${left}px; top: ${top}px; width: ${width}px; height: ${height}px;`;
+	}
 
 	function compressGrid(): void {
-		if (!controller) return;
-		controller.compress();
+		const sorted = [...items].sort((a, b) => (a.y !== b.y ? a.y - b.y : a.x - b.x));
+		const occupied = new Set<string>();
+
+		for (const item of sorted) {
+			let bestY = 0;
+			for (let tryY = 0; tryY <= item.y; tryY++) {
+				let canPlace = true;
+				for (let dy = 0; dy < item.h && canPlace; dy++) {
+					for (let dx = 0; dx < item.w && canPlace; dx++) {
+						if (occupied.has(`${item.x + dx},${tryY + dy}`)) {
+							canPlace = false;
+							bestY = tryY + dy + 1;
+						}
+					}
+				}
+				if (canPlace) {
+					bestY = tryY;
+					break;
+				}
+			}
+			item.y = bestY;
+			for (let dy = 0; dy < item.h; dy++) {
+				for (let dx = 0; dx < item.w; dx++) {
+					occupied.add(`${item.x + dx},${item.y + dy}`);
+				}
+			}
+		}
+		items = sorted;
 	}
 
 	function resetGrid(): void {
-		$items = $items.map((item) => {
-			let coordinates: Coordinates[] = $cols > 2 ? desktopCoordinates : mobileCoordinates;
-			let index = coordinates.findIndex((obj) => obj.id === item.id);
-			item.x = coordinates[index].x;
-			item.y = coordinates[index].y;
-			item.w = coordinates[index].w;
-			item.h = coordinates[index].h;
-			return item;
+		const coordinates = cols > 2 ? desktopCoords : mobileCoords;
+		items = items.map((item) => {
+			const coord = coordinates.find((c) => c.id === item.id);
+			if (coord) {
+				item.x = coord.x;
+				item.y = coord.y;
+				item.w = coord.w;
+				item.h = coord.h;
+			}
+			return { ...item };
 		});
 		compressGrid();
 	}
 
-	function updateGrid() {
-		const width = 844;
-		$previousCols = $cols;
-		$cols = window.innerWidth >= width ? 4 : 2;
-
-		const height = window.innerHeight;
-		const newRows: number = Math.floor(height / fraction);
-		rows.set(newRows < 1 ? 1 : newRows);
-
-		$items = $cols > 2 ? data.desktopLayout : data.mobileLayout;
-		resetGrid();
-	}
-
-	onMount(() => {
-		interval = setInterval(compressGrid, 100);
-		if (browser) {
-			updateGrid();
-			window.addEventListener('resize', updateGrid);
-		}
-	});
-
-	onDestroy(() => {
-		if (browser) {
-			window.removeEventListener('resize', updateGrid);
-		}
-		clearInterval(interval);
-	});
-
-	activeTab.subscribe((value) => {
-		if (!browser) return;
-
-		resetGrid();
-		if (value === 'all') return;
-
-		// Filter active and inactive items
-		let activeItems = $items.filter((item) => item.category.includes(value));
-		let inactiveItems = $items.filter((item) => !item.category.includes(value));
-		$items = placeItems(activeItems.concat(inactiveItems));
-	});
-
-	function placeItems(items: GridObject[]): GridObject[] {
+	function placeItems(itemsToPlace: GridObject[]): GridObject[] {
 		const occupiedCells = new Set<string>();
-
-		function canPlaceObject(x: number, y: number, obj: GridObject): boolean {
-			for (let i = 0; i < obj.w; i++) {
-				for (let j = 0; j < obj.h; j++) {
-					if (occupiedCells.has(`${x + i},${y + j}`)) {
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-
-		function placeObject(x: number, y: number, obj: GridObject): void {
-			obj.x = x;
-			obj.y = y;
-			for (let i = 0; i < obj.w; i++) {
-				for (let j = 0; j < obj.h; j++) {
-					occupiedCells.add(`${x + i},${y + j}`);
-				}
-			}
-		}
-
-		let currentY = 0;
-
-		for (const obj of items) {
+		for (const obj of itemsToPlace) {
 			let placed = false;
-
-			for (let y = currentY; !placed; y++) {
-				for (let x = 0; x <= $cols - obj.w; x++) {
-					if (canPlaceObject(x, y, obj)) {
-						placeObject(x, y, obj);
+			for (let y = 0; !placed; y++) {
+				for (let x = 0; x <= cols - obj.w; x++) {
+					let canPlace = true;
+					for (let i = 0; i < obj.w && canPlace; i++) {
+						for (let j = 0; j < obj.h && canPlace; j++) {
+							if (occupiedCells.has(`${x + i},${y + j}`)) canPlace = false;
+						}
+					}
+					if (canPlace) {
+						obj.x = x;
+						obj.y = y;
+						for (let i = 0; i < obj.w; i++) {
+							for (let j = 0; j < obj.h; j++) {
+								occupiedCells.add(`${x + i},${y + j}`);
+							}
+						}
 						placed = true;
 						break;
 					}
 				}
 			}
 		}
-
-		return items;
+		return itemsToPlace;
 	}
 
-	$: if ($items || $cols) {
-		let maxY = 0;
-		$items.forEach((item) => {
-			if (item.y + item.h > maxY) {
-				maxY = item.y + item.h;
-			}
-		});
+	function updateGrid(): void {
+		cols = window.innerWidth >= 844 ? 4 : 2;
+		items = cols > 2 ? [...data.desktopLayout] : [...data.mobileLayout];
+		resetGrid();
+	}
 
-		let overhead: number = $cols > 2 ? 16 : 8;
-		$maxHeight = maxY * fraction + 16 * maxY - overhead;
-		$maxWidth = $cols * fraction + 16 * $cols - overhead;
+	// Initialize and handle resize
+	$effect(() => {
+		if (!browser) return;
+		updateGrid();
+		window.addEventListener('resize', updateGrid);
+		return () => window.removeEventListener('resize', updateGrid);
+	});
+
+	// Tab filtering
+	$effect(() => {
+		const tab = activeTab.value;
+		untrack(() => {
+			if (!browser || items.length === 0) return;
+			resetGrid();
+			if (tab === 'all') return;
+			const active = items.filter((i) => i.category.includes(tab));
+			const inactive = items.filter((i) => !i.category.includes(tab));
+			items = placeItems([...active, ...inactive]);
+		});
+	});
+
+	// Drag handlers
+	function onDragStart(e: PointerEvent, id: string): void {
+		const item = items.find((i) => i.id === id);
+		if (!item) return;
+		draggingId = id;
+		dragStartClientX = e.clientX;
+		dragStartClientY = e.clientY;
+		dragOrigX = item.x;
+		dragOrigY = item.y;
+		(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+	}
+
+	function onDragMove(e: PointerEvent): void {
+		if (!draggingId) return;
+		const item = items.find((i) => i.id === draggingId);
+		if (!item) return;
+
+		const dx = Math.round((e.clientX - dragStartClientX) / unit);
+		const dy = Math.round((e.clientY - dragStartClientY) / unit);
+
+		item.x = Math.max(0, Math.min(cols - item.w, dragOrigX + dx));
+		item.y = Math.max(0, dragOrigY + dy);
+		items = [...items];
+	}
+
+	function onDragEnd(): void {
+		if (draggingId) {
+			compressGrid();
+			draggingId = null;
+		}
 	}
 </script>
 
 <div class="relative h-full w-full">
 	<Navigation />
-	<div class="max-w-screen mx-auto flex min-h-screen" style="width: {$maxWidth}px; height: {$maxHeight}px;">
-		<Grid cols={$cols} rows={$rows} bounds={true} {itemSize} collision="push" bind:controller>
-			{#each $items as { id, x, y, w, h, component, border, category } (id)}
-				<GridItem
-					{id}
-					bind:x
-					bind:y
-					bind:w
-					bind:h
-					resizable={false}
-					previewClass="grid-item-preview"
-					activeClass="cursor-grabbing"
-					class="grid-item !z-[1] mb-[16px] mr-[16px] {!border && 'border-none'} {category.includes($activeTab) || $activeTab === 'all'
-						? 'opacity-100'
-						: 'opacity-50'}"
+	<div class="max-w-screen relative mx-auto" style="width: {maxWidth}px; height: {maxHeight}px;">
+		{#each items as item (item.id)}
+			{@const isActive = item.category.includes(activeTab.value) || activeTab.value === 'all'}
+			{@const isDragging = draggingId === item.id}
+			<div
+				class="grid-item absolute !z-[1] {!item.border && 'border-none'} {isActive ? 'opacity-100' : 'opacity-50'} {isDragging ? '!z-[100] cursor-grabbing' : ''}"
+				style={getItemStyle(item)}
+				role="group"
+				aria-label="Grid item"
+				onpointermove={onDragMove}
+				onpointerup={onDragEnd}
+			>
+				<div
+					class="absolute right-0 top-0 !z-[10] m-2 h-8 w-8 cursor-grab rounded-full bg-muted"
+					onpointerdown={(e) => onDragStart(e, item.id)}
+					role="button"
+					tabindex="0"
+					aria-label="Drag to reorder"
+					onkeydown={(e) => e.key === 'Enter' && e.preventDefault()}
 				>
-					<div slot="moveHandle" let:moveStart on:pointerover={() => ($hovering = true)} on:pointerout={() => ($hovering = false)}>
-						<div class="absolute right-0 top-0 !z-[10] m-2 h-8 w-8 rounded-full bg-muted" on:pointerdown={moveStart}>
-							<Grip class="h-full w-full cursor-grab p-2" />
-						</div>
-					</div>
+					<Grip class="h-full w-full p-2" />
+				</div>
 
-					{#if component}
-						<svelte:component this={component} />
-					{/if}
-				</GridItem>
-			{/each}
-		</Grid>
+				{#if item.component}
+					<item.component />
+				{/if}
+			</div>
+		{/each}
 	</div>
 </div>

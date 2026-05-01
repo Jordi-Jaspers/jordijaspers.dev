@@ -29,11 +29,11 @@
 		TailwindCssLogo,
 		TraefikLogo
 	} from '$lib/components/stack/index.ts';
-	import { type Writable, writable } from 'svelte/store';
 
-	let isHovering1: Writable<boolean> = writable(false);
-	let isHovering2: Writable<boolean> = writable(false);
-	let techStack = [
+	let isHovering1: boolean = $state(false);
+	let isHovering2: boolean = $state(false);
+
+	const techStack = [
 		{ name: 'Apache Groovy', logo: ApacheGroovyLogo },
 		{ name: 'Bitwarden', logo: BitwardenLogo },
 		{ name: 'Bun', logo: BunLogo },
@@ -68,21 +68,23 @@
 <div class="flex h-full w-full justify-between space-x-8 overflow-y-scroll">
 	<div
 		class="absolute left-0 top-5 inline-flex h-[50%] w-full flex-nowrap items-center"
-		on:pointerover={() => isHovering1.set(true)}
-		on:pointerout={() => isHovering1.set(false)}
+		role="region"
+		aria-label="Tech stack carousel row 1"
+		onpointerover={() => (isHovering1 = true)}
+		onpointerout={() => (isHovering1 = false)}
 	>
-		<ul class="infinite-x-scroll flex h-28 items-center space-x-8 {$isHovering1 && 'pause'}">
-			{#each techStack as { name, logo }}
+		<ul class="infinite-x-scroll flex h-28 items-center space-x-8 {isHovering1 && 'pause'}">
+			{#each techStack as { name, logo: Logo } (name)}
 				<li class="flex h-full flex-col justify-end space-y-4">
-					<svelte:component this={logo} class="fill-foreground dark:fill-white" />
+					<Logo class="fill-foreground dark:fill-white" />
 					<p class="text-fill-foreground text-nowrap font-montserrat text-xs font-semibold">{name}</p>
 				</li>
 			{/each}
 		</ul>
-		<ul class="infinite-x-scroll flex h-28 items-center space-x-8 {$isHovering1 && 'pause'}">
-			{#each techStack as { name, logo }}
+		<ul class="infinite-x-scroll flex h-28 items-center space-x-8 {isHovering1 && 'pause'}">
+			{#each techStack as { name, logo: Logo } (name + '-2')}
 				<li class="flex h-full flex-col justify-end space-y-4">
-					<svelte:component this={logo} class="fill-muted-foreground/75 dark:fill-white" />
+					<Logo class="fill-muted-foreground/75 dark:fill-white" />
 					<p class="text-nowrap font-montserrat text-xs font-semibold text-muted-foreground/75">{name}</p>
 				</li>
 			{/each}
@@ -90,21 +92,23 @@
 	</div>
 	<div
 		class="absolute bottom-5 left-0 inline-flex h-[50%] w-full flex-nowrap items-center space-x-8"
-		on:pointerover={() => isHovering2.set(true)}
-		on:pointerout={() => isHovering2.set(false)}
+		role="region"
+		aria-label="Tech stack carousel row 2"
+		onpointerover={() => (isHovering2 = true)}
+		onpointerout={() => (isHovering2 = false)}
 	>
-		<ul class="infinite-x-scroll-reverse flex h-28 items-center space-x-8 {$isHovering2 && 'pause'}">
-			{#each techStack as { name, logo }}
+		<ul class="infinite-x-scroll-reverse flex h-28 items-center space-x-8 {isHovering2 && 'pause'}">
+			{#each techStack as { name, logo: Logo } (name + '-3')}
 				<li class="flex h-full flex-col justify-end space-y-4">
-					<svelte:component this={logo} class="fill-foreground dark:fill-white" />
+					<Logo class="fill-foreground dark:fill-white" />
 					<p class="text-nowrap font-montserrat text-xs font-semibold text-foreground">{name}</p>
 				</li>
 			{/each}
 		</ul>
-		<ul class="infinite-x-scroll-reverse flex h-28 items-center space-x-8 {$isHovering2 && 'pause'}">
-			{#each techStack as { name, logo }}
+		<ul class="infinite-x-scroll-reverse flex h-28 items-center space-x-8 {isHovering2 && 'pause'}">
+			{#each techStack as { name, logo: Logo } (name + '-4')}
 				<li class="flex h-full flex-col justify-end space-y-4">
-					<svelte:component this={logo} class="fill-foreground dark:fill-white" />
+					<Logo class="fill-foreground dark:fill-white" />
 					<p class="text-nowrap font-montserrat text-xs font-semibold text-foreground">{name}</p>
 				</li>
 			{/each}

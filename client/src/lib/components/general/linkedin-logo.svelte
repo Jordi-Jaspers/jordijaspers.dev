@@ -1,6 +1,5 @@
 <script lang="ts">
-	let className: string = 'fill-[#0A66C2] h-[256px] w-[256px]';
-	export { className as class };
+	let { class: className = 'fill-[#0A66C2] h-[256px] w-[256px]' }: { class?: string } = $props();
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" class={className} role="img" viewBox="0 0 24 24" version="1.1" preserveAspectRatio="xMidYMid">

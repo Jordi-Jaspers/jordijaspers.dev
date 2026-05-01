@@ -1,11 +1,8 @@
 <script lang="ts">
-	import { Download, Link, RefreshCcw, Share } from 'lucide-svelte';
-
-	// Function to handle the download of the PDF file
-	function downloadResume() {
+	function downloadResume(): void {
 		const link = document.createElement('a');
-		link.href = '/files/resume.pdf'; // Path to the resume file in the static folder
-		link.download = 'resume.pdf'; // Set the download attribute to the desired filename
+		link.href = '/files/resume.pdf';
+		link.download = 'resume.pdf';
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -22,9 +19,8 @@
 
 	<button
 		class="group flex w-fit items-center justify-center space-x-2 rounded-2xl border-2 border-accent px-8 py-2 transition-colors duration-500 hover:bg-muted/50"
-		on:click={downloadResume}
+		onclick={downloadResume}
 	>
-		<Download class="h-4 w-4" />
 		<span class="font-montserrat text-xs">Download</span>
 	</button>
 </div>

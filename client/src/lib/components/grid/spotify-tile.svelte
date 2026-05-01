@@ -7,9 +7,9 @@
 	<div>
 		<div class="flex items-center space-x-2">
 			<div class="flex space-x-1">
-				<div class="bounce h-3 w-1 rounded-2xl bg-primary" />
-				<div class="bounce h-3 w-1 rounded-2xl bg-primary" />
-				<div class="bounce h-3 w-1 rounded-2xl bg-primary" />
+				<div class="bounce h-3 w-1 rounded-2xl bg-primary"></div>
+				<div class="bounce h-3 w-1 rounded-2xl bg-primary"></div>
+				<div class="bounce h-3 w-1 rounded-2xl bg-primary"></div>
 			</div>
 			<p class="font-silka text-primary">Online. Last played</p>
 		</div>

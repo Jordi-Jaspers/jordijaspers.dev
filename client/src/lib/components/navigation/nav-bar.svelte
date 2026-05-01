@@ -1,22 +1,21 @@
 <script lang="ts">
-	import { type Writable, writable } from 'svelte/store';
-	import { onMount } from 'svelte';
-	import { activeTab } from '$lib/components/store/localstorage.ts';
+	import { activeTab } from '$lib/stores/localstorage.svelte';
 	import { browser } from '$app/environment';
 
-	let width: Writable<number> = writable(0);
-	let left: Writable<number> = writable(0);
+	let width: number = $state(0);
+	let left: number = $state(0);
 
-	function updateTabIndicator(tabIndex: string) {
-		$activeTab = tabIndex;
+	function updateTabIndicator(tabIndex: string): void {
+		activeTab.value = tabIndex;
+		if (!browser) return;
 		const tab = document.getElementById(`tab-${tabIndex}`);
 		if (tab) {
-			$width = tab.offsetWidth;
-			$left = tab.offsetLeft;
+			width = tab.offsetWidth;
+			left = tab.offsetLeft;
 		}
 	}
 
-	onMount(() => {
+	$effect(() => {
 		updateTabIndicator('all');
 	});
 </script>
@@ -27,14 +26,14 @@
 	<div id="navigation" class="relative z-0 flex rounded-full border-2 bg-accent px-1 py-1 dark:bg-transparent">
 		<div
 			class="tab-indicator absolute h-8 rounded-2xl bg-background dark:bg-accent"
-			style="z-index: -1; left: {$left}px; width: {$width}px;"
+			style="z-index: -1; left: {left}px; width: {width}px;"
 		></div>
-		<button id="tab-all" class="tab-button regular-text font-semibold" on:click={() => updateTabIndicator('all')}> All </button>
-		<button id="tab-about" class="tab-button regular-text font-semibold" on:click={() => updateTabIndicator('about')}> About </button>
-		<button id="tab-projects" class="tab-button regular-text font-semibold" on:click={() => updateTabIndicator('projects')}>
+		<button id="tab-all" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('all')}> All </button>
+		<button id="tab-about" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('about')}> About </button>
+		<button id="tab-projects" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('projects')}>
 			Projects
 		</button>
-		<button id="tab-media" class="tab-button regular-text font-semibold" on:click={() => updateTabIndicator('media')}> Media </button>
+		<button id="tab-media" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('media')}> Media </button>
 	</div>
 
 	<a

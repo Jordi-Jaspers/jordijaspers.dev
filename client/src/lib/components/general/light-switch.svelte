@@ -4,10 +4,10 @@
 	import { Moon, Sun } from 'lucide-svelte';
 	import { crossfade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { isDarkMode } from '$lib/components/store/localstorage.ts';
+	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 
-	isDarkMode.subscribe((value) => {
-		setMode(value ? 'dark' : 'light');
+	$effect(() => {
+		setMode(isDarkMode.value ? 'dark' : 'light');
 	});
 
 	const [send, receive] = crossfade({
@@ -26,11 +26,15 @@
 			};
 		}
 	});
+
+	function handleCheckedChange(checked: boolean): void {
+		isDarkMode.value = checked;
+	}
 </script>
 
 <div class="my-auto flex h-full flex-col items-center justify-center space-y-2">
 	<div class="relative h-8 w-8">
-		{#if !$isDarkMode}
+		{#if !isDarkMode.value}
 			<div class="absolute inset-0 h-full w-full" in:receive={{ key: 'moon' }} out:send={{ key: 'moon' }}>
 				<Moon class="h-full w-full text-foreground" />
 			</div>
@@ -41,5 +45,5 @@
 		{/if}
 	</div>
 
-	<Switch id="light-switch" bind:checked={$isDarkMode} aria-label="Toggle theme" />
+	<Switch id="light-switch" checked={isDarkMode.value} onCheckedChange={handleCheckedChange} aria-label="Toggle theme" />
 </div>

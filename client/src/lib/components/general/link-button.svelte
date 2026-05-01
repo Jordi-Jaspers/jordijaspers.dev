@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { Link } from 'lucide-svelte';
 
-	let className: string = 'fill-[#1ED760] h-[256px] w-[256px]';
-	export { className as class };
-	export let name: string;
-	export let href: string;
+	interface Props {
+		class?: string;
+		name: string;
+		href: string;
+	}
+
+	let { class: className = '', name, href }: Props = $props();
 </script>
 
 <a class="link-button link-button-hover group {className}" {href}>

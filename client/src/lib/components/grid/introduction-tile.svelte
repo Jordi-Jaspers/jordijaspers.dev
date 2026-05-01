@@ -7,9 +7,10 @@
 
 	const duration: number = 700;
 
-	let showProfile1: boolean = true;
-	let showProfile2: boolean = false;
-	let isSwitching: boolean = false;
+	let showProfile1: boolean = $state(true);
+	let showProfile2: boolean = $state(false);
+	let isSwitching: boolean = $state(false);
+
 	function toggleProfile(): void {
 		if (isSwitching) return;
 		isSwitching = true;
@@ -45,7 +46,7 @@
 		</p>
 		<button
 			class="group flex w-full justify-center space-x-2 rounded-2xl border-2 border-accent py-1"
-			on:click={toggleProfile}
+			onclick={toggleProfile}
 			disabled={isSwitching}
 		>
 			<RefreshCcw class="{!isSwitching && 'group-hover:rotate-[540deg]'} transition-transform duration-1000" />
