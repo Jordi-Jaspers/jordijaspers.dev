@@ -1,5 +1,7 @@
 <script lang="ts">
 	import mapboxgl from 'mapbox-gl';
+	import 'mapbox-gl/dist/mapbox-gl.css';
+	import { untrack } from 'svelte';
 	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 	import { Minus, Plus } from 'lucide-svelte';
 	import Profile from '$lib/images/profile_picture_3.webp?enhanced';
@@ -16,8 +18,8 @@
 
 	let mapStyle = $derived(
 		isDarkMode.value
-			? 'mapbox://styles/mapbox/navigation-guidance-night-v4'
-			: 'mapbox://styles/mapbox/navigation-guidance-day-v4'
+			? 'mapbox://styles/mapbox/dark-v11'
+			: 'mapbox://styles/mapbox/light-v11'
 	);
 
 	function incrementZoom(): void {
@@ -31,18 +33,22 @@
 	}
 
 	$effect(() => {
-		const m = new mapboxgl.Map({
-			accessToken,
-			container: mapContainer,
-			interactive: false,
-			style: mapStyle,
-			center: [longitude, latitude],
-			zoom,
-			pitch: 0,
-			bearing: 0
-		});
-		map = m;
-		return () => m.remove();
+		try {
+			const m = new mapboxgl.Map({
+				accessToken,
+				container: mapContainer,
+				interactive: false,
+				style: untrack(() => mapStyle),
+				center: [longitude, latitude],
+				zoom: untrack(() => zoom),
+				pitch: 0,
+				bearing: 0
+			});
+			map = m;
+			return () => m.remove();
+		} catch (e) {
+			console.error('Mapbox initialization failed:', e);
+		}
 	});
 
 	$effect(() => {

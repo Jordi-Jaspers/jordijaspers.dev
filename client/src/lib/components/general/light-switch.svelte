@@ -6,8 +6,11 @@
 	import { cubicOut } from 'svelte/easing';
 	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 
+	import { untrack } from 'svelte';
+
+	// Sync initial mode from localStorage (one-time, no reactive deps)
 	$effect(() => {
-		setMode(isDarkMode.value ? 'dark' : 'light');
+		untrack(() => setMode(isDarkMode.value ? 'dark' : 'light'));
 	});
 
 	const [send, receive] = crossfade({
@@ -29,6 +32,7 @@
 
 	function handleCheckedChange(checked: boolean): void {
 		isDarkMode.value = checked;
+		setMode(checked ? 'dark' : 'light');
 	}
 </script>
 
