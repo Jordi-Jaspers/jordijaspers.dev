@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="space-y-2">
-		<p class="justify-evenly font-montserrat text-[0.9rem]">
+		<p class="justify-evenly font-body text-[0.9rem]">
 			I'm <span class="font-moranga text-2xl font-bold">Jordi</span>, your go-to software engineer in the web development space. Ranging
 			from Enterprise application to simple webpages.
 		</p>

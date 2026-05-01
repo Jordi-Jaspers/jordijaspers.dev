@@ -11,10 +11,10 @@
 				<div class="bounce h-3 w-1 rounded-2xl bg-primary"></div>
 				<div class="bounce h-3 w-1 rounded-2xl bg-primary"></div>
 			</div>
-			<p class="font-silka text-primary">Online. Last played</p>
+			<p class="font-body text-primary">Online. Last played</p>
 		</div>
 		<h2 class="font-moranga text-4xl">Blinding Lights</h2>
-		<p class="font-silka">The Weeknd</p>
+		<p class="font-body">The Weeknd</p>
 	</div>
 </div>
 

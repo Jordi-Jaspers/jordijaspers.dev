@@ -77,7 +77,7 @@
 			{#each techStack as { name, logo: Logo } (name)}
 				<li class="flex h-full flex-col justify-end space-y-4">
 					<Logo class="fill-foreground dark:fill-white" />
-					<p class="text-fill-foreground text-nowrap font-montserrat text-xs font-semibold">{name}</p>
+					<p class="text-fill-foreground text-nowrap font-body text-xs font-semibold">{name}</p>
 				</li>
 			{/each}
 		</ul>
@@ -85,7 +85,7 @@
 			{#each techStack as { name, logo: Logo } (name + '-2')}
 				<li class="flex h-full flex-col justify-end space-y-4">
 					<Logo class="fill-muted-foreground/75 dark:fill-white" />
-					<p class="text-nowrap font-montserrat text-xs font-semibold text-muted-foreground/75">{name}</p>
+					<p class="text-nowrap font-body text-xs font-semibold text-muted-foreground/75">{name}</p>
 				</li>
 			{/each}
 		</ul>
@@ -101,7 +101,7 @@
 			{#each techStack as { name, logo: Logo } (name + '-3')}
 				<li class="flex h-full flex-col justify-end space-y-4">
 					<Logo class="fill-foreground dark:fill-white" />
-					<p class="text-nowrap font-montserrat text-xs font-semibold text-foreground">{name}</p>
+					<p class="text-nowrap font-body text-xs font-semibold text-foreground">{name}</p>
 				</li>
 			{/each}
 		</ul>
@@ -109,7 +109,7 @@
 			{#each techStack as { name, logo: Logo } (name + '-4')}
 				<li class="flex h-full flex-col justify-end space-y-4">
 					<Logo class="fill-foreground dark:fill-white" />
-					<p class="text-nowrap font-montserrat text-xs font-semibold text-foreground">{name}</p>
+					<p class="text-nowrap font-body text-xs font-semibold text-foreground">{name}</p>
 				</li>
 			{/each}
 		</ul>

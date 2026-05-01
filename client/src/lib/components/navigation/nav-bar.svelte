@@ -28,17 +28,17 @@
 			class="tab-indicator absolute h-8 rounded-2xl bg-background dark:bg-accent"
 			style="z-index: -1; left: {left}px; width: {width}px;"
 		></div>
-		<button id="tab-all" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('all')}> All </button>
-		<button id="tab-about" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('about')}> About </button>
-		<button id="tab-projects" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('projects')}>
+		<button id="tab-all" class="tab-button font-body font-semibold" onclick={() => updateTabIndicator('all')}> All </button>
+		<button id="tab-about" class="tab-button font-body font-semibold" onclick={() => updateTabIndicator('about')}> About </button>
+		<button id="tab-projects" class="tab-button font-body font-semibold" onclick={() => updateTabIndicator('projects')}>
 			Projects
 		</button>
-		<button id="tab-media" class="tab-button regular-text font-semibold" onclick={() => updateTabIndicator('media')}> Media </button>
+		<button id="tab-media" class="tab-button font-body font-semibold" onclick={() => updateTabIndicator('media')}> Media </button>
 	</div>
 
 	<a
 		href="mailto:jordijaspers@gmail.com"
-		class="regular-text hidden text-sm transition-colors duration-300 ease-in hover:text-muted-foreground md:block"
+		class="font-body hidden text-sm transition-colors duration-300 ease-in hover:text-muted-foreground md:block"
 	>
 		Contact
 	</a>

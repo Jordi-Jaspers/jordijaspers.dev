@@ -3,48 +3,48 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	--background: hsl(0 0% 100%);
-	--foreground: hsl(20 14.3% 4.1%);
-	--card: hsl(0 0% 100%);
-	--card-foreground: hsl(20 14.3% 4.1%);
-	--popover: hsl(0 0% 100%);
-	--popover-foreground: hsl(20 14.3% 4.1%);
-	--primary: hsl(47.9 95.8% 53.1%);
-	--primary-foreground: hsl(26 83.3% 14.1%);
-	--secondary: hsl(60 4.8% 95.9%);
-	--secondary-foreground: hsl(24 9.8% 10%);
-	--muted: hsl(60 4.8% 95.9%);
-	--muted-foreground: hsl(25 5.3% 44.7%);
-	--accent: hsl(0 12.2% 91.96%);
-	--accent-foreground: hsl(24 9.8% 10%);
-	--destructive: hsl(0 72.22% 50.59%);
-	--destructive-foreground: hsl(60 9.1% 97.8%);
-	--border: hsl(20 5.9% 90%);
-	--input: hsl(20 5.9% 90%);
-	--ring: hsl(20 14.3% 4.1%);
-	--radius: 1rem;
+	--background: oklch(96% 0.012 75);
+	--foreground: oklch(22% 0.01 60);
+	--card: oklch(94% 0.014 75);
+	--card-foreground: oklch(22% 0.01 60);
+	--popover: oklch(96% 0.012 75);
+	--popover-foreground: oklch(22% 0.01 60);
+	--primary: oklch(58% 0.16 38);
+	--primary-foreground: oklch(97% 0.008 75);
+	--secondary: oklch(90% 0.018 75);
+	--secondary-foreground: oklch(28% 0.012 60);
+	--muted: oklch(90% 0.018 75);
+	--muted-foreground: oklch(52% 0.02 65);
+	--accent: oklch(88% 0.022 75);
+	--accent-foreground: oklch(28% 0.012 60);
+	--destructive: oklch(55% 0.2 25);
+	--destructive-foreground: oklch(97% 0.008 75);
+	--border: oklch(85% 0.02 75);
+	--input: oklch(85% 0.02 75);
+	--ring: oklch(58% 0.16 38);
+	--radius: 0.75rem;
 }
 
 .dark {
-	--background: hsl(20 14.3% 4.1%);
-	--foreground: hsl(60 9.1% 97.8%);
-	--card: hsl(20 14.3% 4.1%);
-	--card-foreground: hsl(60 9.1% 97.8%);
-	--popover: hsl(20 14.3% 4.1%);
-	--popover-foreground: hsl(60 9.1% 97.8%);
-	--primary: hsl(47.9 95.8% 53.1%);
-	--primary-foreground: hsl(26 83.3% 14.1%);
-	--secondary: hsl(12 6.5% 15.1%);
-	--secondary-foreground: hsl(60 9.1% 97.8%);
-	--muted: hsl(12 6.5% 15.1%);
-	--muted-foreground: hsl(24 5.4% 63.9%);
-	--accent: hsl(215 15.38% 15.29%);
-	--accent-foreground: hsl(60 9.1% 97.8%);
-	--destructive: hsl(0 62.8% 30.6%);
-	--destructive-foreground: hsl(60 9.1% 97.8%);
-	--border: hsl(12 6.5% 15.1%);
-	--input: hsl(12 6.5% 15.1%);
-	--ring: hsl(35.5 91.7% 32.9%);
+	--background: oklch(20% 0.012 60);
+	--foreground: oklch(93% 0.014 80);
+	--card: oklch(23% 0.014 60);
+	--card-foreground: oklch(93% 0.014 80);
+	--popover: oklch(20% 0.012 60);
+	--popover-foreground: oklch(93% 0.014 80);
+	--primary: oklch(62% 0.18 38);
+	--primary-foreground: oklch(15% 0.01 60);
+	--secondary: oklch(28% 0.016 60);
+	--secondary-foreground: oklch(93% 0.014 80);
+	--muted: oklch(28% 0.016 60);
+	--muted-foreground: oklch(65% 0.02 70);
+	--accent: oklch(30% 0.018 60);
+	--accent-foreground: oklch(93% 0.014 80);
+	--destructive: oklch(45% 0.18 25);
+	--destructive-foreground: oklch(93% 0.014 80);
+	--border: oklch(30% 0.018 60);
+	--input: oklch(30% 0.018 60);
+	--ring: oklch(62% 0.18 38);
 }
 
 @theme inline {
@@ -72,9 +72,14 @@
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 
-	--font-moranga: "Moranga";
-	--font-silka: "Silka Regular";
-	--font-montserrat: "Montserrat";
+	--font-heading: "Moranga";
+	--font-body: "Silka";
+
+	--ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--duration-fast: 150ms;
+	--duration-normal: 300ms;
+	--duration-slow: 500ms;
 
 	--animate-infinite-x-scroll: infinite-x-scroll 40s linear infinite;
 	--animate-infinite-x-scroll-reverse: infinite-x-scroll-reverse 40s linear infinite;
@@ -116,7 +121,7 @@
 }
 
 @font-face {
-	font-family: "Silka Regular";
+	font-family: "Silka";
 	src: url('/fonts/Silka-Medium.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
@@ -143,8 +148,23 @@
 }
 
 @layer utilities {
-	.regular-text {
-		@apply font-montserrat;
+	.surface-grain {
+		position: relative;
+	}
+
+	.surface-grain::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+		opacity: 0.04;
+		mix-blend-mode: overlay;
+	}
+
+	.dark .surface-grain::after {
+		opacity: 0.03;
+		mix-blend-mode: soft-light;
 	}
 
 	.tab-button {
@@ -170,7 +190,7 @@
 	}
 
 	.grid-item {
-		@apply overflow-hidden rounded-3xl border-4 border-transparent bg-background p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl dark:border-accent dark:bg-[#090c10];
+		@apply overflow-hidden rounded-3xl border-4 border-transparent bg-background p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl dark:border-accent dark:bg-background;
 	}
 
 	.grid-item-preview {
