@@ -12,7 +12,7 @@
 
 | Type | Technology | Version |
 |------|------------|---------|
-| Language | TypeScript | ~5.x |
+| Language | TypeScript | ^6.x |
 | Framework | SvelteKit | ^2.x |
 | UI Library | Svelte | ^5.x |
 | CSS | Tailwind CSS | ^4.x (@tailwindcss/vite) |
@@ -22,7 +22,7 @@
 | Maps | mapbox-gl | ^3.7.0 |
 | Grid | CSS Grid + custom pointer-event drag | - |
 | Dark Mode | mode-watcher | latest |
-| DnD | svelte-dnd-action | latest |
+
 
 ## Architecture
 

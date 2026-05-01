@@ -10,7 +10,7 @@
 #   - svelte-adapter-bun produces self-contained build (no node_modules at runtime)
 # =============================================================================
 
-FROM oven/bun:1.2.17-alpine AS base
+FROM oven/bun:1.3.13-alpine AS base
 WORKDIR /app
 
 LABEL description="The portfolio website of Jordi Jaspers."
@@ -21,7 +21,7 @@ LABEL maintainer="Jordi Jaspers"
 # ---------------------------------------------------------------------------
 FROM base AS install
 
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install --frozen-lockfile
 
@@ -31,7 +31,7 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 FROM base AS build
 
 COPY --from=install /app/node_modules node_modules
-COPY package.json bun.lockb svelte.config.js tsconfig.json postcss.config.js tailwind.config.ts vite.config.ts ./
+COPY package.json bun.lock svelte.config.js tsconfig.json vite.config.ts ./
 COPY src/ src/
 COPY static/ static/
 
