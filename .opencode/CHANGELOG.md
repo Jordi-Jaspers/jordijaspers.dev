@@ -2,6 +2,7 @@
 
 | Date | Epic | Feature | Summary |
 |------|------|---------|---------|
+| 2026-05-02 | REDESIGN | Home Page — Particle Hero + Bento Grid | Particle canvas hero with social bubbles, static CSS Grid bento (Work, About, Spotify, TechStack, Resume), Mapbox about tile, responsive layout. [Details](./completed/20260502-REDESIGN-03-home-page.md) |
 | 2026-05-02 | REDESIGN | Layout, Routing & Navigation | Multi-page routing (/, /work, /about), floating pill nav (bottom mobile, top desktop), crossfade view transitions, social footer. [Details](./completed/20260502-REDESIGN-02-layout-routing-navigation.md) |
 | 2026-05-01 | REDESIGN | Design System Foundation | Japandi + Terracotta oklch palette, Moranga+Silka typography, grain texture, animation tokens. Removed Google Fonts. [Details](./completed/20260501-REDESIGN-01-design-system-foundation.md) |
 | 2026-05-01 | MODERNIZE | Dependency Update & Cleanup | Updated all 31 deps to latest stable (12 major bumps), removed 3 unused packages. Vite 8, TS 6, ESLint 10, lucide-svelte 1.x. [Details](./completed/20260501-MODERNIZE-dependency-update.md) |

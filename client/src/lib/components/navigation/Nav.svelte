@@ -44,7 +44,7 @@
 <nav class="nav-pill surface-grain">
 	<a
 		href="/"
-		class="font-heading text-sm uppercase tracking-widest px-3 py-1.5 rounded-full transition-all duration-normal
+		class="font-heading duration-normal rounded-full px-3 py-1.5 text-sm tracking-widest uppercase transition-all
 			{isActive('/') ? 'text-primary' : 'text-foreground hover:text-primary'}"
 		aria-label="Home"
 		aria-current={isActive('/') ? 'page' : undefined}
@@ -53,27 +53,27 @@
 		<span class="hidden md:inline">JJ</span>
 	</a>
 
-	<div class="h-4 w-px bg-border/50" aria-hidden="true"></div>
+	<div class="bg-border/50 h-4 w-px" aria-hidden="true"></div>
 
 	{#each navLinks as { href, label, Icon }}
 		<a
 			{href}
-			class="relative flex items-center gap-1.5 font-body text-sm px-3 py-1.5 rounded-full transition-all duration-normal
+			class="font-body duration-normal relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-all
 				{isActive(href) ? 'text-primary' : 'text-foreground hover:text-primary'}"
 			aria-label={label}
 			aria-current={isActive(href) ? 'page' : undefined}
 		>
-			{#if isActive(href)}<span class="absolute inset-0 rounded-full bg-primary/10"></span>{/if}
+			{#if isActive(href)}<span class="bg-primary/10 absolute inset-0 rounded-full"></span>{/if}
 			<span class="relative flex md:hidden"><Icon class="h-4 w-4" /></span>
 			<span class="relative hidden md:inline">{label}</span>
 		</a>
 	{/each}
 
-	<div class="h-4 w-px bg-border/50" aria-hidden="true"></div>
+	<div class="bg-border/50 h-4 w-px" aria-hidden="true"></div>
 
 	<button
 		onclick={handleToggleMode}
-		class="relative flex h-8 w-8 items-center justify-center rounded-full text-foreground transition-colors duration-fast hover:text-primary"
+		class="text-foreground duration-fast hover:text-primary relative flex h-8 w-8 items-center justify-center rounded-full transition-colors"
 		aria-label="Toggle theme"
 	>
 		{#if isDarkMode.value}
@@ -102,7 +102,9 @@
 		border: 1px solid oklch(from var(--border) l c h / 0.5);
 		background: oklch(from var(--background) l c h / 0.8);
 		padding: 0.375rem 0.5rem;
-		box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+		box-shadow:
+			0 10px 15px -3px rgb(0 0 0 / 0.1),
+			0 4px 6px -4px rgb(0 0 0 / 0.1);
 		backdrop-filter: blur(24px);
 		-webkit-backdrop-filter: blur(24px);
 		view-transition-name: nav;

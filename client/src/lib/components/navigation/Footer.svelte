@@ -11,7 +11,7 @@
 	const linkClass = 'text-muted-foreground transition-colors duration-150 hover:text-foreground';
 </script>
 
-<footer class="border-t border-border py-12">
+<footer class="border-border border-t py-12">
 	<div class="mx-auto flex max-w-5xl flex-col items-center gap-6 px-6">
 		<div class="flex items-center gap-6">
 			{#each socialLinks as { href, label, Icon }}
@@ -23,6 +23,6 @@
 				<Mail class="h-5 w-5" />
 			</a>
 		</div>
-		<p class="font-body text-sm text-muted-foreground">© 2026 Jordi Jaspers</p>
+		<p class="font-body text-muted-foreground text-sm">© 2026 Jordi Jaspers</p>
 	</div>
 </footer>

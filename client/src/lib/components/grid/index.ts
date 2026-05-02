@@ -1,10 +1,7 @@
-import IntroductionTile from './introduction-tile.svelte';
-import MapTile from './map-tile.svelte';
-import SpotifyTile from './spotify-tile.svelte';
-import GithubTile from './github-tile.svelte';
-import AniflixTile from './aniflix-tile.svelte';
-import ResumeTile from './resume-tile.svelte';
-import LinkedInTile from './linkedin-tile.svelte';
-import TechStackTile from './tech-stack-tile.svelte';
+import SpotifyTile from './SpotifyTile.svelte';
+import TechStackTile from './TechStackTile.svelte';
+import ResumeTile from './ResumeTile.svelte';
+import WorkTile from './WorkTile.svelte';
+import AboutTile from './AboutTile.svelte';
 
-export { IntroductionTile, MapTile, SpotifyTile, GithubTile, AniflixTile, ResumeTile, LinkedInTile, TechStackTile };
+export { SpotifyTile, TechStackTile, ResumeTile, WorkTile, AboutTile };

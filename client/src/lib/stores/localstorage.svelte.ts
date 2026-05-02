@@ -32,5 +32,4 @@ class LocalStorageState<T> {
 	}
 }
 
-export const activeTab = new LocalStorageState<string>('activeTab', 'all');
 export const isDarkMode = new LocalStorageState<boolean>('isDarkMode', false);

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -72,8 +72,8 @@
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 
-	--font-heading: "Moranga";
-	--font-body: "Silka";
+	--font-heading: 'Moranga';
+	--font-body: 'Silka';
 
 	--ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 	--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -121,7 +121,7 @@
 }
 
 @font-face {
-	font-family: "Silka";
+	font-family: 'Silka';
 	src: url('/fonts/Silka-Medium.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
@@ -162,7 +162,7 @@
 	}
 
 	.tab-button {
-		@apply h-8 flex-1 whitespace-nowrap rounded-2xl px-4 text-sm font-medium transition-colors duration-150 ease-in-out focus-visible:bg-background focus-visible:outline-none focus-visible:ring;
+		@apply focus-visible:bg-background h-8 flex-1 rounded-2xl px-4 text-sm font-medium whitespace-nowrap transition-colors duration-150 ease-in-out focus-visible:ring focus-visible:outline-none;
 	}
 
 	.tab-indicator {
@@ -170,7 +170,7 @@
 	}
 
 	.map-button {
-		@apply absolute z-[10] m-2 h-10 w-10 justify-center overflow-hidden rounded-full bg-background;
+		@apply bg-background absolute z-[10] m-2 h-10 w-10 justify-center overflow-hidden rounded-full;
 	}
 
 	.map-button-shadow {
@@ -184,15 +184,15 @@
 	}
 
 	.grid-item {
-		@apply overflow-hidden rounded-3xl border-4 border-transparent bg-background p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl dark:border-accent dark:bg-background;
+		@apply bg-background dark:bg-background overflow-hidden rounded-3xl border border-border/50 dark:border-border/30 p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl;
 	}
 
 	.grid-item-preview {
-		@apply rounded-3xl border-4 border-transparent bg-accent p-4 shadow-md transition-all duration-300 ease-in-out dark:border-accent;
+		@apply bg-accent dark:border-accent rounded-3xl border-4 border-transparent p-4 shadow-md transition-all duration-300 ease-in-out;
 	}
 
 	.link-button {
-		@apply absolute z-[10] m-2 h-8 w-8 justify-between overflow-hidden rounded-full bg-background;
+		@apply bg-background absolute z-[10] m-2 h-8 w-8 justify-between overflow-hidden rounded-full;
 	}
 
 	.link-button-hover:hover {
@@ -223,16 +223,20 @@
 	}
 
 	.rainbow-text {
-		@apply inline-block bg-gradient-to-r from-blue-600 via-primary via-25% to-red-600 to-85% bg-clip-text text-transparent;
+		@apply via-primary inline-block bg-gradient-to-r from-blue-600 via-25% to-red-600 to-85% bg-clip-text text-transparent;
 	}
 }
 
 /* View Transitions */
 @keyframes fade-in {
-	from { opacity: 0; }
+	from {
+		opacity: 0;
+	}
 }
 @keyframes fade-out {
-	to { opacity: 0; }
+	to {
+		opacity: 0;
+	}
 }
 
 ::view-transition-old(root) {
