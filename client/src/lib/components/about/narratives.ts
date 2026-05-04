@@ -15,7 +15,7 @@ export const narratives: Narrative[] = [
 	{
 		eyebrow: 'Chapter 02 · 2018',
 		heading: '9,000 km from home',
-		body: 'A semester abroad turned into the year that rewired everything. Different language, different food, different way of thinking. Came back changed — restless, hungry, certain that the world was bigger than I\'d imagined.',
+		body: "A semester abroad turned into the year that rewired everything. Different language, different food, different way of thinking. Came back changed — restless, hungry, certain that the world was bigger than I'd imagined.",
 		footer: '📍 Seoul, South Korea · Exchange semester'
 	},
 	{
@@ -27,7 +27,7 @@ export const narratives: Narrative[] = [
 	{
 		eyebrow: 'Chapter ∞ · Someday',
 		heading: 'The next frontier',
-		body: 'AI is rewriting what software can do. Models that reason, agents that act, systems that learn. The map ends here for now — but the journey doesn\'t. Whatever comes next, I want to be building it.',
+		body: "AI is rewriting what software can do. Models that reason, agents that act, systems that learn. The map ends here for now — but the journey doesn't. Whatever comes next, I want to be building it.",
 		footer: '📍 Somewhere out there · The future'
 	}
 ];

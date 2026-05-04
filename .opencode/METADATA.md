@@ -76,8 +76,7 @@ jordijaspers.dev/
 
 | Pattern | Usage |
 |---------|-------|
-| Bento grid | `svelte-grid-extended` with draggable tiles, 4-col/2-col responsive |
-| Tab filtering | `activeTab` store filters grid items by category |
+| Bento grid | Static CSS Grid, 3-col desktop / 2-col mobile (<844px), tile-specific span classes |
 | Dark mode | `mode-watcher` + HSL CSS custom properties |
 | UI primitives | shadcn-svelte (bits-ui) |
 | Prerendering | Static site (`prerender = true`) |
@@ -93,7 +92,8 @@ jordijaspers.dev/
 ## Notes
 
 - All code lives in `client/` — root only has CI/CD and repo config
-- Svelte 4 (not 5) — uses `export let`, stores, `$:` reactivity (not runes)
+- Svelte 5 with runes (`$state`, `$effect`, `$derived`, `$props`) — NOT Svelte 4
 - Bun adapter for SSR/serving, but `prerender = true` makes it effectively static
 - Custom fonts: Moranga (headings), Silka (body), Montserrat (regular text)
 - Grid breakpoint at 844px viewport width
+- Vitest 2 + @testing-library/svelte 5 + jsdom 25 for unit tests; tests colocated as `src/**/*.spec.ts`

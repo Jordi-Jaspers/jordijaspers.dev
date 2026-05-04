@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ParticleCanvas from '$lib/components/hero/ParticleCanvas.svelte';
-	import { SpotifyTile, TechStackTile, CareerTile, ProjectsTile, AboutTile } from '$lib/components/grid';
+	import { SpotifyTile, TechStackTile, CareerTile, ProjectsTile, AboutTile, GithubActivityTile } from '$lib/components/grid';
 </script>
 
 <svelte:head>
@@ -63,6 +63,11 @@
 		<div class="grid-item bento-career p-4 sm:p-5">
 			<CareerTile />
 		</div>
+
+		<!-- GitHub Activity tile: full-width row 3 -->
+		<div class="grid-item bento-activity p-4 sm:p-6">
+			<GithubActivityTile />
+		</div>
 	</div>
 </section>
 
@@ -76,7 +81,7 @@
 	.bento-grid {
 		display: grid;
 		grid-template-columns: 1.2fr 1fr 1fr;
-		grid-template-rows: 200px 200px;
+		grid-template-rows: 200px 200px 200px;
 		gap: 1rem;
 	}
 
@@ -105,11 +110,16 @@
 		grid-row: 2;
 	}
 
+	.bento-activity {
+		grid-column: 1 / 4;
+		grid-row: 3;
+	}
+
 	/* Mobile: 2-col with fixed row heights */
 	@media (max-width: 843px) {
 		.bento-grid {
 			grid-template-columns: 1fr 1fr;
-			grid-template-rows: 400px 160px 160px 160px;
+			grid-template-rows: 400px 160px 160px 160px 160px;
 		}
 
 		.bento-projects {
@@ -117,24 +127,29 @@
 			grid-row: 1;
 		}
 
-		.bento-spotify {
+		.bento-techstack {
 			grid-column: 1;
 			grid-row: 2;
 		}
 
-		.bento-techstack {
-			grid-column: 2;
-			grid-row: 2;
+		.bento-spotify {
+			grid-column: 1;
+			grid-row: 3;
 		}
 
 		.bento-about {
-			grid-column: 1 / 3;
-			grid-row: 3;
+			grid-column: 2;
+			grid-row: 2 / 4;
 		}
 
 		.bento-career {
 			grid-column: 1 / 3;
 			grid-row: 4;
+		}
+
+		.bento-activity {
+			grid-column: 1 / 3;
+			grid-row: 5;
 		}
 	}
 

@@ -3,5 +3,6 @@ import TechStackTile from './TechStackTile.svelte';
 import CareerTile from './CareerTile.svelte';
 import ProjectsTile from './ProjectsTile.svelte';
 import AboutTile from './AboutTile.svelte';
+import GithubActivityTile from './GithubActivityTile.svelte';
 
-export { SpotifyTile, TechStackTile, CareerTile, ProjectsTile, AboutTile };
+export { SpotifyTile, TechStackTile, CareerTile, ProjectsTile, AboutTile, GithubActivityTile };

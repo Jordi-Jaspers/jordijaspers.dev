@@ -23,9 +23,7 @@
 	let markerEls: HTMLDivElement[] = [];
 	let popups: mapboxgl.Popup[] = [];
 
-	let mapStyle: string = $derived(
-		isDarkMode.value ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11'
-	);
+	let mapStyle: string = $derived(isDarkMode.value ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
 
 	let activeNarrative = $derived(narratives[activeIndex]);
 
