@@ -35,6 +35,10 @@ COPY package.json bun.lock svelte.config.js tsconfig.json vite.config.ts ./
 COPY src/ src/
 COPY static/ static/
 
+# Build-time env vars (Vite inlines import.meta.env.VITE_* at build time)
+ARG VITE_MAPBOX_ACCESS_TOKEN
+ENV VITE_MAPBOX_ACCESS_TOKEN=$VITE_MAPBOX_ACCESS_TOKEN
+
 ENV NODE_ENV=production
 RUN bun run build
 
