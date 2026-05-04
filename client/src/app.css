@@ -118,6 +118,7 @@
 	src: url('/fonts/Moranga.otf') format('opentype');
 	font-weight: normal;
 	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
@@ -125,6 +126,7 @@
 	src: url('/fonts/Silka-Medium.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	font-display: swap;
 }
 
 @layer base {

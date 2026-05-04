@@ -2,6 +2,7 @@
 
 | Date | Epic | Feature | Summary |
 |------|------|---------|---------|
+| 2026-05-04 | SEO | Search Engine & Social Media Optimization | Added Open Graph + Twitter Card meta, JSON-LD Person/WebSite schema, sitemap.xml with robots.txt directive. Removed legacy keywords meta. Applied `font-display: swap` to local @font-face. og-image.png asset pending. [Details](./completed/20260504-SEO-01-search-social.md) |
 | 2026-05-04 | REDESIGN | About Page — Scroll-Driven Map Journey | Replaced /about stub with sticky Mapbox canvas through 4 waypoints (Hasselt→Seoul→Maastricht→Mars/globe), bottom-right narrative card overlay, 3-row 39-logo tech carousel, Hapkido+Spotify section. Mobile (<844px) gets static timeline, no Mapbox bundle. Vitest configured (first tests in project), 33 unit tests on pure logic. [Details](./completed/20260504-REDESIGN-05-about-page.md) |
 | 2026-05-04 | REDESIGN | Career + Projects Restructure | Split `/work` into `/career` (timeline, stats, NDA notable work, certifications, CTA) + `/projects` (3 cards). New animated CareerTile and ProjectsTile bento. Extracted ImageCarousel + Pill. Eventify screenshots + JFrame logo wired. [Details](./completed/20260504-REDESIGN-04-career-projects-restructure.md) |
 | 2026-05-02 | REDESIGN | Home Page — Particle Hero + Bento Grid | Particle canvas hero with social bubbles, static CSS Grid bento (Work, About, Spotify, TechStack, Resume), Mapbox about tile, responsive layout. [Details](./completed/20260502-REDESIGN-03-home-page.md) |
