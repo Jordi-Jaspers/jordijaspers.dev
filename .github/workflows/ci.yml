@@ -46,12 +46,12 @@ jobs:
 
       - name: Run type checks
         env:
-          VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
+          VITE_MAPTILER_KEY: ${{ secrets.VITE_MAPTILER_KEY }}
         run: bun run check
 
       - name: Build
         env:
-          VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
+          VITE_MAPTILER_KEY: ${{ secrets.VITE_MAPTILER_KEY }}
         run: bun run build
 
   # =============================================================================
@@ -95,7 +95,7 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64
           build-args: |
-            VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
+            VITE_MAPTILER_KEY=${{ secrets.VITE_MAPTILER_KEY }}
 
   # =============================================================================
   # RELEASE - Docker images with version tags + Release notes
@@ -141,7 +141,7 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64
           build-args: |
-            VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
+            VITE_MAPTILER_KEY=${{ secrets.VITE_MAPTILER_KEY }}
 
       # --- Generate release notes and create GitHub release ---
       - name: Get previous tag

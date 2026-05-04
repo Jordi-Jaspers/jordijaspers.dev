@@ -1,32 +1,31 @@
 <script lang="ts">
-	import mapboxgl from 'mapbox-gl';
-	import 'mapbox-gl/dist/mapbox-gl.css';
-	import { untrack } from 'svelte';
+	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 	import { env } from '$lib/config/env';
-
-	const accessToken = env.mapbox.accessToken;
+	import { MAP_STYLES } from '$lib/config/maps';
+	import { createMap } from '$lib/utils/map';
+	import type { Map } from '$lib/utils/map';
 
 	let mapContainer: HTMLDivElement = $state()!;
 	const longitude: number = 5.68889;
 	const latitude: number = 50.84833;
 	const zoom: number = 10;
 
-	let mapStyle = $derived(isDarkMode.value ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+	let mapStyle: string = $derived(isDarkMode.value ? MAP_STYLES.dark : MAP_STYLES.light);
 
-	let map: mapboxgl.Map | undefined = $state();
+	let map: Map | undefined = $state();
 
-	function tintMap(m: mapboxgl.Map): void {
-		const dark = isDarkMode.value;
+	function tintMap(m: Map): void {
+		const dark: boolean = isDarkMode.value;
 		try {
+			// Tint background layer (void behind the world)
+			if (m.getLayer('background')) {
+				m.setPaintProperty('background', 'background-color', dark ? '#201a14' : '#f5ede0');
+			}
 			// Tint water
 			if (m.getLayer('water')) {
 				m.setPaintProperty('water', 'fill-color', dark ? '#1a1612' : '#f0e6d6');
-			}
-			// Tint land/background
-			if (m.getLayer('land')) {
-				m.setPaintProperty('land', 'background-color', dark ? '#201a14' : '#f5ede0');
 			}
 			// Tint roads
 			for (const layer of ['road-street', 'road-minor', 'road-major', 'road-motorway-trunk']) {
@@ -39,25 +38,28 @@
 		}
 	}
 
-	$effect(() => {
-		try {
-			const m = new mapboxgl.Map({
-				accessToken,
-				container: mapContainer,
-				interactive: false,
-				style: untrack(() => mapStyle),
-				center: [longitude, latitude],
-				zoom,
-				pitch: 0,
-				bearing: 0,
-				attributionControl: false
-			});
+	onMount(() => {
+		if (!env.maptiler.key) return;
+
+		let cleanup: (() => void) | undefined;
+
+		createMap({
+			container: mapContainer,
+			style: mapStyle,
+			center: [longitude, latitude],
+			zoom,
+			interactive: false,
+			pitch: 0,
+			bearing: 0,
+			attributionControl: false
+		}).then(({ map: m, cleanup: c }) => {
+			cleanup = c;
 			m.on('style.load', () => tintMap(m));
+			m.on('load', () => tintMap(m));
 			map = m;
-			return () => m.remove();
-		} catch (e) {
-			console.error('Mapbox initialization failed:', e);
-		}
+		});
+
+		return () => cleanup?.();
 	});
 
 	$effect(() => {
@@ -68,7 +70,7 @@
 
 <div class="group relative flex h-full w-full overflow-hidden">
 	<!-- Full-bleed Mapbox map -->
-	<div bind:this={mapContainer} class="absolute inset-0 h-full w-full"></div>
+	<div bind:this={mapContainer} class="map-canvas absolute inset-0 h-full w-full"></div>
 
 	<!-- Location pin (above map, below link overlay) -->
 	<div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">

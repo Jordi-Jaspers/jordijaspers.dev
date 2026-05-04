@@ -1,40 +1,40 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { untrack } from 'svelte';
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import mapboxgl from 'mapbox-gl';
-	import 'mapbox-gl/dist/mapbox-gl.css';
 	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 	import { env } from '$lib/config/env';
+	import { MAP_STYLES } from '$lib/config/maps';
+	import { createMap } from '$lib/utils/map';
+	import type { Map } from '$lib/utils/map';
 	import { waypoints } from './waypoints';
 	import { narratives } from './narratives';
 	import { getActiveWaypointIndex, getMapAnimationOptions } from './scroll-observer';
 	import type { Waypoint } from './types';
 
-	const accessToken: string = env.mapbox.accessToken;
-
 	let mapContainer: HTMLDivElement = $state()!;
 	let spacerRefs: HTMLDivElement[] = $state([]);
-	let map: mapboxgl.Map | undefined = $state();
+	let map: Map | undefined = $state();
 	let activeIndex: number = $state(0);
 	let prefersReducedMotion: boolean = $state(false);
 
 	// Per-waypoint marker elements and popup instances
 	let markerEls: HTMLDivElement[] = [];
-	let popups: mapboxgl.Popup[] = [];
+	let popups: { isOpen(): boolean; addTo(m: Map): void; remove(): void }[] = [];
 
-	let mapStyle: string = $derived(isDarkMode.value ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11');
+	let mapStyle: string = $derived(isDarkMode.value ? MAP_STYLES.dark : MAP_STYLES.light);
 
 	let activeNarrative = $derived(narratives[activeIndex]);
 
-	function tintMap(m: mapboxgl.Map): void {
+	function tintMap(m: Map): void {
 		const dark: boolean = isDarkMode.value;
 		try {
+			// Tint background layer (void behind the world)
+			if (m.getLayer('background')) {
+				m.setPaintProperty('background', 'background-color', dark ? '#201a14' : '#f5ede0');
+			}
 			if (m.getLayer('water')) {
 				m.setPaintProperty('water', 'fill-color', dark ? '#1a1612' : '#f0e6d6');
-			}
-			if (m.getLayer('land')) {
-				m.setPaintProperty('land', 'background-color', dark ? '#201a14' : '#f5ede0');
 			}
 			for (const layer of ['road-street', 'road-minor', 'road-major', 'road-motorway-trunk']) {
 				if (m.getLayer(layer)) {
@@ -70,7 +70,7 @@
 	}
 
 	function updateActivePopup(newIndex: number): void {
-		popups.forEach((popup: mapboxgl.Popup, i: number) => {
+		popups.forEach((popup, i: number) => {
 			if (i === newIndex) {
 				if (!popup.isOpen()) popup.addTo(map!);
 			} else {
@@ -79,56 +79,90 @@
 		});
 	}
 
-	$effect(() => {
-		if (!browser) return;
+	/**
+	 * Compute initial active waypoint index from current scroll position.
+	 * Used on mount to prevent flash-of-first-waypoint when refreshing mid-journey.
+	 */
+	function getInitialActiveIndex(): number {
+		if (spacerRefs.length === 0) return 0;
+		const viewportMid: number = window.innerHeight / 2;
+		let bestIndex: number = 0;
+		let bestDistance: number = Infinity;
+		spacerRefs.forEach((el: HTMLDivElement, i: number) => {
+			const rect: DOMRect = el.getBoundingClientRect();
+			const elementMid: number = rect.top + rect.height / 2;
+			const distance: number = Math.abs(elementMid - viewportMid);
+			if (distance < bestDistance) {
+				bestDistance = distance;
+				bestIndex = i;
+			}
+		});
+		return bestIndex;
+	}
 
+	onMount(() => {
 		prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-		const firstWaypoint: Waypoint = waypoints[0];
-		const m = new mapboxgl.Map({
-			accessToken,
+		if (!env.maptiler.key) return;
+
+		let cleanup: (() => void) | undefined;
+
+		// Determine starting waypoint from current scroll position (handles browser refresh restore)
+		const initialIndex: number = getInitialActiveIndex();
+		activeIndex = initialIndex;
+		const initialWaypoint: Waypoint = waypoints[initialIndex];
+		const isMars: boolean = initialWaypoint.id === 'mars';
+
+		createMap({
 			container: mapContainer,
+			style: mapStyle,
 			interactive: false,
-			style: untrack(() => mapStyle),
-			center: firstWaypoint.coordinates,
-			zoom: firstWaypoint.zoom,
+			center: isMars ? [0, 20] : initialWaypoint.coordinates,
+			zoom: isMars ? 1.5 : initialWaypoint.zoom,
 			pitch: 0,
 			bearing: 0,
 			attributionControl: false
+		}).then(async ({ map: m, cleanup: c }) => {
+			cleanup = c;
+			const applyTint = (): void => tintMap(m);
+			m.on('style.load', () => {
+				if (isMars) m.setProjection({ type: 'globe' });
+				applyTint();
+			});
+			m.on('load', applyTint);
+			map = m;
+
+			// Create markers and popups for each waypoint
+			const { default: maplibregl } = await import('maplibre-gl');
+			markerEls = [];
+			popups = [];
+
+			waypoints.forEach((waypoint: Waypoint, i: number) => {
+				// Marker element — uniform pin for all waypoints including Mars
+				const el: HTMLDivElement = document.createElement('div');
+				el.className = 'waypoint-pin';
+				if (i === initialIndex) el.classList.add('active');
+				markerEls.push(el);
+
+				new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(waypoint.coordinates).addTo(m);
+
+				// Popup
+				const popup = new maplibregl.Popup({
+					closeButton: false,
+					closeOnClick: false,
+					anchor: 'bottom',
+					offset: 16,
+					className: 'waypoint-popup'
+				}).setHTML(buildPopupHtml(waypoint));
+
+				popups.push(popup);
+			});
+
+			// Open popup for current waypoint immediately
+			popups[initialIndex]?.addTo(m);
 		});
 
-		m.on('style.load', () => tintMap(m));
-		map = m;
-
-		// Create markers and popups for each waypoint
-		markerEls = [];
-		popups = [];
-
-		waypoints.forEach((waypoint: Waypoint, i: number) => {
-			// Marker element — uniform pin for all waypoints including Mars
-			const el = document.createElement('div');
-			el.className = 'waypoint-pin';
-			if (i === 0) el.classList.add('active');
-			markerEls.push(el);
-
-			new mapboxgl.Marker({ element: el, anchor: 'center' }).setLngLat(waypoint.coordinates).addTo(m);
-
-			// Popup
-			const popup = new mapboxgl.Popup({
-				closeButton: false,
-				closeOnClick: false,
-				anchor: 'bottom',
-				offset: 16,
-				className: 'waypoint-popup'
-			}).setHTML(buildPopupHtml(waypoint));
-
-			popups.push(popup);
-		});
-
-		// Open first popup immediately
-		popups[0]?.addTo(m);
-
-		return () => m.remove();
+		return () => cleanup?.();
 	});
 
 	// React to dark mode changes
@@ -142,7 +176,7 @@
 		if (!browser) return;
 		if (spacerRefs.length === 0) return;
 
-		const observer = new IntersectionObserver(
+		const observer: IntersectionObserver = new IntersectionObserver(
 			(entries: IntersectionObserverEntry[]) => {
 				const newIndex: number = getActiveWaypointIndex(entries, activeIndex);
 				if (newIndex === activeIndex) return;
@@ -156,7 +190,7 @@
 
 				// Handle Mars globe projection
 				if (waypoint.id === 'mars') {
-					map.setProjection({ name: 'globe' });
+					map.setProjection({ type: 'globe' });
 					const marsOptions = {
 						...animation.options,
 						center: [0, 20] as [number, number],
@@ -169,7 +203,7 @@
 					}
 				} else {
 					// Reset to mercator when leaving Mars
-					map.setProjection({ name: 'mercator' });
+					map.setProjection({ type: 'mercator' });
 					if (animation.type === 'fly') {
 						map.flyTo(animation.options);
 					} else {
@@ -361,7 +395,7 @@
 	}
 
 	/* ── Popup overrides ───────────────────────────────────────── */
-	:global(.waypoint-popup .mapboxgl-popup-content) {
+	:global(.waypoint-popup .maplibregl-popup-content) {
 		background: var(--background);
 		border: 1px solid var(--border);
 		border-left: 3px solid var(--primary);
@@ -372,7 +406,7 @@
 		max-width: 280px;
 	}
 
-	:global(.waypoint-popup .mapboxgl-popup-tip) {
+	:global(.waypoint-popup .maplibregl-popup-tip) {
 		border-top-color: var(--background) !important;
 	}
 
