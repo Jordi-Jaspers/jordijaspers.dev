@@ -1,0 +1,28 @@
+# Jordi Jaspers
+
+Lead Software & Applied AI Engineer | Consulting Manager
+Employer: Ilionx (https://www.ilionx.com/)
+Location: Maastricht, Netherlands
+Canonical URL: https://jordijaspers.dev
+
+Jordi Jaspers is a Lead Software & Applied AI Engineer based in Maastricht, Netherlands.
+He works at Ilionx, leading a team of 15+ engineers building enterprise systems and AI solutions.
+With 7+ years of experience, he has delivered 30+ projects for clients including VodafoneZiggo, APG, and TenneT.
+
+For a more detailed version, see /llms-full.txt
+Sitemap: https://jordijaspers.dev/sitemap.xml
+
+## Projects
+
+- **JFrame** — Open-source Java/Spring/Quarkus utility library (Apache 2.0). https://github.com/JFrameOSS/JFrame
+- **Eventify** — Real-time service monitoring platform (Spring Boot + SvelteKit + TimescaleDB). https://github.com/Jordi-Jaspers/Eventify
+- **Aniflix** — Anime streaming platform (archived). https://github.com/Jordi-Jaspers/Aniflix
+- **AI Relay** — Enterprise AI gateway for secure LLM access (NDA · Ilionx).
+- **KirchroaGPT** — Regional dialect large language model for local government (NDA).
+
+## Contact
+
+- Email: jordijaspers@gmail.com
+- GitHub: https://github.com/Jordi-Jaspers
+- LinkedIn: https://www.linkedin.com/in/jordi-jaspers/
+- Resume: https://jordijaspers.dev/files/resume.pdf

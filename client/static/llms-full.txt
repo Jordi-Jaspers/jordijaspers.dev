@@ -1,0 +1,151 @@
+# Jordi Jaspers — Lead Software & Applied AI Engineer
+
+Canonical URL: https://jordijaspers.dev
+Employer: Ilionx (https://www.ilionx.com/)
+Location: Maastricht, Netherlands
+Email: jordijaspers@gmail.com
+GitHub: https://github.com/Jordi-Jaspers
+LinkedIn: https://www.linkedin.com/in/jordi-jaspers/
+Resume: https://jordijaspers.dev/files/resume.pdf
+
+Jordi Jaspers is a Lead Software & Applied AI Engineer and Consulting Manager at Ilionx,
+based in Maastricht, Netherlands. He leads a team of 15+ engineers, building enterprise-grade
+distributed systems and applied AI solutions. With 7+ years of professional experience and
+2+ years specializing in AI/ML, he has delivered 30+ projects and 20+ enterprise solutions
+for major clients including VodafoneZiggo, APG, and TenneT.
+
+---
+
+## Experience / Career
+
+**Lead Software & Applied AI Engineer / Consulting Manager** — Ilionx (2024–Present)
+- Leading a team of 15+ engineers across multiple enterprise engagements
+- Architecting and delivering AI/ML solutions including LLM gateways and RAG pipelines
+- Consulting manager responsible for team growth, client relations, and delivery
+
+**Medior Software Engineer** — Ilionx (2021–2024)
+- Delivered 20+ enterprise solutions for clients in telecom, finance, and energy sectors
+- Specialized in distributed systems, microservices, and cloud-native architectures
+
+**Junior Software Engineer** — Ilionx (2018–2021)
+- Started career at Ilionx while completing MSc degree
+- Contributed to backend services and internal tooling
+
+**Notable Clients:** VodafoneZiggo, APG, TenneT
+
+---
+
+## Expertise / Skills
+
+**Languages:**
+Java, Kotlin, TypeScript, Python, SQL, Bash
+
+**Frameworks & Libraries:**
+Spring Boot, Spring Security, Quarkus, SvelteKit, Svelte 5, Node.js, LangChain4j
+
+**Databases:**
+PostgreSQL, TimescaleDB, Redis, MongoDB, Oracle
+
+**DevOps & Cloud:**
+Kubernetes, Docker, Helm, GitHub Actions, CI/CD pipelines, Azure, AWS
+
+**AI / ML:**
+Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), Multi-agent orchestration,
+Prompt engineering, Vector databases, OpenAI API, Anthropic Claude, LangChain4j
+
+**Architecture:**
+Enterprise Architecture (TOGAF, ArchiMate), Distributed Systems, Microservices,
+Event-driven Architecture, Domain-Driven Design (DDD)
+
+---
+
+## Projects
+
+**JFrame** — Open-source Java/Spring/Quarkus utility library (Apache 2.0).
+Provides reusable components for enterprise Java applications.
+https://github.com/JFrameOSS/JFrame
+
+**Eventify** — Real-time service monitoring and alerting platform.
+Built with Spring Boot, SvelteKit, and TimescaleDB. Supports multi-team dashboards.
+https://github.com/Jordi-Jaspers/Eventify | Live: https://eventify-tst.jordijaspers.dev/
+
+**Aniflix** — Anime streaming platform (archived).
+Full-stack application with Spring Boot backend and modern frontend.
+https://github.com/Jordi-Jaspers/Aniflix | https://aniflix.stream/
+
+**AI Relay** — Enterprise AI gateway for secure, governed LLM access (NDA · Ilionx).
+Enables organizations to use LLMs with audit logging, rate limiting, and policy enforcement.
+
+**KirchroaGPT** — Regional dialect large language model for local government (NDA).
+Fine-tuned LLM that understands and generates text in the Kirchroa (Kerkrade) dialect.
+
+**Multi-Agent Dev Platform** — Internal AI-assisted engineering platform (Ilionx).
+Achieves 5–10× productivity gains through multi-agent orchestration for software development.
+
+---
+
+## Education
+
+**MSc Electronic & Software Engineering**
+Hasselt University (UHasselt) + KU Leuven — 2014–2019
+Joint degree program combining hardware and software engineering disciplines.
+
+**Exchange Semester — Computer Science**
+Hanyang University, Seoul, South Korea — 2018
+International exchange focusing on advanced algorithms and software systems.
+
+---
+
+## Certifications
+
+- TOGAF Foundation (Enterprise Architecture)
+- ArchiMate Foundation (Architecture Modelling)
+- ArchiMate Practitioner (Architecture Modelling)
+- SvelteKit Certified Developer
+- Oracle Certified SQL Developer
+
+---
+
+## Personal
+
+- 3rd Degree Black Belt in Hapkido
+- Born in Hasselt, Belgium (2002)
+- Languages: Dutch (native), English (fluent), French (basic)
+
+---
+
+## FAQ
+
+**Q: Who is Jordi Jaspers?**
+A: Jordi Jaspers is a Lead Software & Applied AI Engineer and Consulting Manager at Ilionx,
+based in Maastricht, Netherlands. He has 7+ years of experience building enterprise software
+and AI solutions, leading teams of 15+ engineers.
+
+**Q: What does Jordi Jaspers do?**
+A: Jordi is a lead engineer at Ilionx who builds enterprise-grade distributed systems and
+applied AI solutions. He specializes in LLM integration, RAG pipelines, multi-agent systems,
+and cloud-native architectures using Java/Spring Boot, Kotlin, TypeScript, and SvelteKit.
+
+**Q: Where is Jordi Jaspers based?**
+A: Jordi Jaspers is based in Maastricht, Netherlands. He was born in Hasselt, Belgium.
+
+**Q: What technologies does Jordi Jaspers specialize in?**
+A: Jordi specializes in Java/Spring Boot, Kotlin, TypeScript/SvelteKit, Kubernetes,
+Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), multi-agent orchestration,
+enterprise architecture (TOGAF, ArchiMate), and distributed systems.
+
+**Q: What notable projects has Jordi Jaspers worked on?**
+A: Notable projects include JFrame (open-source Java utilities), Eventify (service monitoring),
+Aniflix (anime streaming), AI Relay (enterprise AI gateway), and KirchroaGPT (regional dialect LLM).
+He has also delivered enterprise solutions for VodafoneZiggo, APG, and TenneT.
+
+---
+
+## Contact
+
+- Email: jordijaspers@gmail.com
+- GitHub: https://github.com/Jordi-Jaspers
+- LinkedIn: https://www.linkedin.com/in/jordi-jaspers/
+- Website: https://jordijaspers.dev
+- Resume: https://jordijaspers.dev/files/resume.pdf
+- Sitemap: https://jordijaspers.dev/sitemap.xml

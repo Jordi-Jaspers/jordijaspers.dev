@@ -30,7 +30,7 @@
 # Welcome to Jordi Jaspers' Web Portfolio
 
 
-👋 Hello there! I'm **Jordi Jaspers**, a seasoned software developer with a passion for crafting efficient and elegant solutions. With 5 years of experience in the world of code, I've developed a knack for turning coffee into code, especially with **Spring Boot**.
+👋 Hello there! I'm **Jordi Jaspers**, a seasoned software developer with a passion for crafting efficient and elegant solutions. With 7+ years of experience in the world of code, I've developed a knack for turning coffee into code, especially with **Spring Boot**.
 
 When I'm not busy debugging or optimizing, you might find me dabbling in some DevOps magic to ensure everything runs as smoothly as possible.
 
@@ -40,7 +40,7 @@ But for now, this repository is all about my web portfolio. Built with **SvelteK
 
 ### Why work with me?
 
-- 🌟 **Experience**: Five years of hands-on experience in software development. I've seen the good, the bad, and the buggy.
+- 🌟 **Experience**: 7+ years of hands-on experience in software development. I've seen the good, the bad, and the buggy.
 - 💡 **Innovation**: I love coming up with creative solutions to complex problems. Let's just say, I know my way around a tricky `if` statement.
 - 🔧 **Tools of the Trade**: Proficient in **Spring Boot**, with a sprinkling of DevOps skills to boot. Whether it's backend development or deployment pipelines, I've got it covered.
 - 📈 **Performance**: I believe in writing code that's not just functional but also performant. After all, why settle for `O(n^2)` when you can have `O(n)`?
@@ -63,6 +63,18 @@ No worries, just check out our [**issues**](https://github.com/Jordi-Jaspers/jor
 
 ## ⭐ Stargazers over time
 [![Stargazers over time](https://starchart.cc/Jordi-Jaspers/jordijaspers.dev.svg?variant=adaptive)](https://starchart.cc/Jordi-Jaspers/jordijaspers.dev)
+
+## 🤖 AI & LLM Discoverability
+
+This site is optimized for AI search engines and LLM-based assistants (ChatGPT, Perplexity, Claude, Google AI). When someone asks an AI assistant *"Who is Jordi Jaspers?"*, the answer should be accurate and grounded in real data.
+
+- **[`/llms.txt`](https://jordijaspers.dev/llms.txt)** — concise structured plaintext (name, role, top projects, contact) following the [llms.txt convention](https://llmstxt.org)
+- **[`/llms-full.txt`](https://jordijaspers.dev/llms-full.txt)** — expanded version with full project descriptions, career timeline, expertise, FAQ
+- **Rich JSON-LD** in `app.html` — `Person` (with `knowsAbout`, `hasCredential`, `alumniOf`, `worksFor`, `hasOccupation`, `address`), `WebSite`, and `FAQPage` schema.org graph
+- **Semantic `<article>` block** — `sr-only` content in `<body>` so text-only crawlers see real bio/projects/experience even before SvelteKit hydrates
+- **`robots.txt`** explicitly allows `GPTBot`, `ChatGPT-User`, `PerplexityBot`, `Google-Extended`, `anthropic-ai`, `ClaudeBot`, `CCBot`
+
+Contract is enforced by 65 Vitest tests in `client/src/lib/seo/llm-seo.spec.ts`.
 
 ## 🛠️ Stack
 

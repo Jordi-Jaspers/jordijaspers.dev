@@ -49,10 +49,94 @@
 						"@type": "Person",
 						"@id": "https://jordijaspers.dev/#person",
 						"name": "Jordi Jaspers",
-						"jobTitle": "Software Engineer",
+						"jobTitle": "Lead Software & Applied AI Engineer",
 						"url": "https://jordijaspers.dev",
 						"image": "https://jordijaspers.dev/og-image.png",
-						"sameAs": ["https://github.com/jordijaspers", "https://www.linkedin.com/in/jordi-jaspers/"]
+						"email": "mailto:jordijaspers@gmail.com",
+						"description": "Lead Software & Applied AI Engineer and Consulting Manager at Ilionx, based in Maastricht, Netherlands. 7+ years building enterprise distributed systems and applied AI solutions.",
+						"birthPlace": {
+							"@type": "Place",
+							"name": "Hasselt, Belgium"
+						},
+						"address": {
+							"@type": "PostalAddress",
+							"addressLocality": "Maastricht",
+							"addressCountry": "NL"
+						},
+						"sameAs": ["https://github.com/Jordi-Jaspers", "https://www.linkedin.com/in/jordi-jaspers/"],
+						"knowsAbout": [
+							"Enterprise Software Architecture",
+							"Distributed Systems",
+							"AI/ML Engineering",
+							"Large Language Models",
+							"Retrieval-Augmented Generation",
+							"Multi-agent Systems",
+							"Java",
+							"Spring Boot",
+							"Kubernetes",
+							"TypeScript",
+							"SvelteKit",
+							"Team Leadership",
+							"Enterprise Architecture"
+						],
+						"hasCredential": [
+							{
+								"@type": "EducationalOccupationalCredential",
+								"credentialCategory": "certification",
+								"name": "TOGAF Foundation"
+							},
+							{
+								"@type": "EducationalOccupationalCredential",
+								"credentialCategory": "certification",
+								"name": "ArchiMate Foundation"
+							},
+							{
+								"@type": "EducationalOccupationalCredential",
+								"credentialCategory": "certification",
+								"name": "ArchiMate Practitioner"
+							},
+							{
+								"@type": "EducationalOccupationalCredential",
+								"credentialCategory": "certification",
+								"name": "SvelteKit Certified Developer"
+							},
+							{
+								"@type": "EducationalOccupationalCredential",
+								"credentialCategory": "certification",
+								"name": "Oracle Certified SQL Developer"
+							}
+						],
+						"alumniOf": [
+							{
+								"@type": "EducationalOrganization",
+								"name": "Hasselt University (UHasselt)",
+								"url": "https://www.uhasselt.be/"
+							},
+							{
+								"@type": "EducationalOrganization",
+								"name": "KU Leuven",
+								"url": "https://www.kuleuven.be/"
+							},
+							{
+								"@type": "EducationalOrganization",
+								"name": "Hanyang University",
+								"url": "https://www.hanyang.ac.kr/"
+							}
+						],
+						"worksFor": {
+							"@type": "Organization",
+							"name": "Ilionx",
+							"url": "https://www.ilionx.com/"
+						},
+						"hasOccupation": {
+							"@type": "Occupation",
+							"name": "Lead Software & Applied AI Engineer",
+							"occupationLocation": {
+								"@type": "City",
+								"name": "Maastricht"
+							},
+							"skills": "Enterprise software, AI/ML, distributed systems, team leadership"
+						}
 					},
 					{
 						"@type": "WebSite",
@@ -62,6 +146,44 @@
 						"description": "Personal portfolio of Jordi Jaspers — Software Engineer",
 						"inLanguage": "en",
 						"publisher": { "@id": "https://jordijaspers.dev/#person" }
+					},
+					{
+						"@type": "FAQPage",
+						"@id": "https://jordijaspers.dev/#faq",
+						"mainEntity": [
+							{
+								"@type": "Question",
+								"name": "Who is Jordi Jaspers?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Jordi Jaspers is a Lead Software & Applied AI Engineer and Consulting Manager at Ilionx, based in Maastricht, Netherlands. He has 7+ years of experience building enterprise software and AI solutions, leading teams of 15+ engineers."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "What does Jordi Jaspers do?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Jordi is a lead engineer at Ilionx who builds enterprise-grade distributed systems and applied AI solutions. He specializes in LLM integration, RAG pipelines, multi-agent systems, and cloud-native architectures using Java/Spring Boot, Kotlin, TypeScript, and SvelteKit."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Where is Jordi Jaspers based?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Jordi Jaspers is based in Maastricht, Netherlands. He was born in Hasselt, Belgium."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "What technologies does Jordi Jaspers specialize in?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Jordi specializes in Java/Spring Boot, Kotlin, TypeScript/SvelteKit, Kubernetes, Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), multi-agent orchestration, enterprise architecture (TOGAF, ArchiMate), and distributed systems."
+								}
+							}
+						]
 					}
 				]
 			}
@@ -71,6 +193,41 @@
 		%sveltekit.head%
 	</head>
 	<body id="body" data-sveltekit-preload-data="hover" class="bg-background">
+		<article class="sr-only" aria-hidden="true">
+			<h1>Jordi Jaspers — Lead Software & Applied AI Engineer</h1>
+			<section>
+				<h2>About</h2>
+				<p>
+					Jordi Jaspers is a Lead Software & Applied AI Engineer based in Maastricht, Netherlands. He works at Ilionx, leading a team of 15+
+					engineers building enterprise systems and AI solutions.
+				</p>
+			</section>
+			<section>
+				<h2>Expertise</h2>
+				<p>
+					Specializes in distributed systems, large language models, retrieval-augmented generation (RAG), multi-agent orchestration,
+					Java/Spring Boot, Kotlin, TypeScript, SvelteKit, Kubernetes, and enterprise architecture (TOGAF, ArchiMate).
+				</p>
+			</section>
+			<section>
+				<h2>Notable Projects</h2>
+				<p>
+					JFrame (open-source Spring/Quarkus utilities), Eventify (service monitoring), Aniflix (anime streaming), AI Relay (enterprise AI
+					gateway, NDA), KirchroaGPT (regional dialect LLM, NDA).
+				</p>
+			</section>
+			<section>
+				<h2>Experience</h2>
+				<p>
+					7+ years at Ilionx (since 2018): Junior → Medior → Lead Engineer & Consulting Manager. Delivered 30+ projects for clients
+					including VodafoneZiggo, APG, and TenneT.
+				</p>
+			</section>
+			<section>
+				<h2>Contact</h2>
+				<p>Email: jordijaspers@gmail.com · GitHub: github.com/Jordi-Jaspers · LinkedIn: linkedin.com/in/jordi-jaspers</p>
+			</section>
+		</article>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
