@@ -41,7 +41,7 @@
 	];
 </script>
 
-<a href={resolve('/about')} class="group relative flex h-full w-full flex-col justify-between overflow-hidden">
+<a href={resolve('/career')} class="group relative flex h-full w-full flex-col justify-between overflow-hidden">
 	<h3 class="font-heading text-foreground text-base font-semibold">Tech Stack</h3>
 
 	<!-- Double carousel -->

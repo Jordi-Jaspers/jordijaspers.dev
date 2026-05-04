@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Timeline, ClientRibbon, StatsGrid, NotableWork, Certifications } from '$lib/components/career';
+	import { Timeline, StatsGrid, NotableWork, Certifications } from '$lib/components/career';
+	import TechStackScroll from '$lib/components/about/TechStackScroll.svelte';
 	import { Mail, Download } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
@@ -23,9 +24,6 @@
 		</p>
 	</div>
 
-	<!-- Credibility ribbon -->
-	<ClientRibbon names={data.client.names} />
-
 	<!-- Stats -->
 	<StatsGrid stats={data.stats} />
 
@@ -37,6 +35,15 @@
 
 	<!-- Certifications -->
 	<Certifications items={data.certifications} />
+
+	<!-- Tech Stack -->
+	<div>
+		<h2 class="font-heading text-foreground text-3xl font-semibold">Tech Stack</h2>
+		<p class="font-body text-muted-foreground mt-2">Polyglot by nature, AI-accelerated by choice.</p>
+		<div class="mt-8">
+			<TechStackScroll />
+		</div>
+	</div>
 
 	<!-- CTA -->
 	<div class="text-center">

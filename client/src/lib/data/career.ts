@@ -7,10 +7,6 @@ export interface Milestone {
 	isPresent?: boolean;
 }
 
-export interface ClientData {
-	names: string[];
-}
-
 export interface Stat {
 	value: string;
 	label: string;
@@ -70,10 +66,6 @@ export const timeline: Milestone[] = [
 		isPresent: true
 	}
 ];
-
-export const clientData: ClientData = {
-	names: ['VodafoneZiggo', 'APG', 'TenneT']
-};
 
 export const stats: Stat[] = [
 	{ value: '7+', label: 'Years experience', sublabel: 'since 2018' },
