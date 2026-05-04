@@ -36,8 +36,8 @@ COPY src/ src/
 COPY static/ static/
 
 # Build-time env vars (Vite inlines import.meta.env.VITE_* at build time)
-ARG VITE_MAPBOX_ACCESS_TOKEN
-ENV VITE_MAPBOX_ACCESS_TOKEN=$VITE_MAPBOX_ACCESS_TOKEN
+ARG VITE_MAPTILER_KEY
+ENV VITE_MAPTILER_KEY=$VITE_MAPTILER_KEY
 
 ENV NODE_ENV=production
 RUN bun run build
