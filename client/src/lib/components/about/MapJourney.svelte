@@ -418,6 +418,26 @@
 		margin: 0;
 	}
 
+	/* ── Mobile narrative card ────────────────────────────────── */
+	@media (max-width: 843px) {
+		.narrative-card {
+			bottom: 1rem;
+			left: 1rem;
+			right: 1rem;
+			width: auto;
+			padding: 1.25rem;
+			min-height: auto;
+		}
+
+		.narrative-heading {
+			font-size: 1.25rem;
+		}
+
+		.narrative-body {
+			font-size: 0.8125rem;
+		}
+	}
+
 	/* ── Reduced motion ────────────────────────────────────────── */
 	@media (prefers-reduced-motion: reduce) {
 		:global(.waypoint-pin) {
