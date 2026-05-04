@@ -1,6 +1,6 @@
 {
 	"name": "jordijaspers.dev",
-	"version": "2.1.2",
+	"version": "2.2.0-SNAPSHOT",
 	"private": false,
 	"scripts": {
 		"dev": "vite dev",
