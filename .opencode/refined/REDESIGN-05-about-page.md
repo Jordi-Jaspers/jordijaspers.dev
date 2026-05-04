@@ -1,7 +1,7 @@
 ---
 epic: "REDESIGN"
 title: "About Page — Scroll-Driven Map Journey, Tech Stack & Personal"
-estimate: XL
+estimate: L
 status: ready
 created: 2026-05-01
 depends_on: ["REDESIGN-02-layout-routing-navigation"]
@@ -64,29 +64,25 @@ The About page is the "depth" page — it converts curiosity from the Home page 
     * And the section conveys breadth and versatility (40+ logos)
     * And `prefers-reduced-motion` pauses the scroll animation
 
-* [ ] **Scenario 7: Certifications display**
-    * Given the visitor reaches the Certifications section
-    * When it renders
-    * Then badge-style cards display: TOGAF, ArchiMate, Oracle SQL Expert, SvelteKit
-    * And each badge has the certification name and a subtle icon or logo
-
-* [ ] **Scenario 8: Personal section**
+* [ ] **Scenario 7: Personal section**
     * Given the visitor reaches the Personal section
     * When it renders
     * Then it shows "Hapkido — 3rd Degree Black Belt" with a martial arts reference
     * And a Spotify profile link to `https://open.spotify.com/user/jordi_jaspers`
 
-* [ ] **Scenario 9: Deep link to tech stack**
+* [ ] **Scenario 8: Deep link to tech stack**
     * Given a visitor clicks the Tech Stack bento tile on the Home page
     * When they navigate to `/about#tech`
     * Then the page scrolls to the Tech Stack section
     * And the view transition completes smoothly
 
-* [ ] **Scenario 10: Mapbox token security**
+* [ ] **Scenario 9: Mapbox token security**
     * Given the Mapbox map initializes
     * When the token is used
     * Then it is a dedicated token (not the default public token) with URL restrictions for `jordijaspers.dev`, `www.jordijaspers.dev`, `localhost:5173`, `localhost:4173`
     * And the token only has public scopes (no secret scopes)
+
+> **Note:** Certifications now live on the `/career` page (delivered in REDESIGN-04). Removed from About scope.
 
 ## 4. Technical Requirements
 
@@ -118,10 +114,6 @@ The About page is the "depth" page — it converts curiosity from the Home page 
 - **Logo size:** ~48px, grayscale by default, color on hover. Subtle opacity variation.
 - **Speed:** ~40s per full cycle (matches current TechStackTile animation).
 - **Heading:** "Tech Stack" (Moranga) + subline: "Polyglot by nature, AI-accelerated by choice."
-
-### Certifications Section
-- **Layout:** Horizontal row of badge cards (flex-wrap on mobile).
-- **Badge style:** Rounded card with subtle border, cert name (Silka bold), optional logo/icon. Japandi muted colors.
 
 ### Personal Section
 - **Layout:** Simple centered block. Hapkido mention + Spotify link (with Spotify icon).
@@ -164,7 +156,6 @@ The About page is the "depth" page — it converts curiosity from the Home page 
 | `MapJourney.svelte` | `client/src/lib/components/about/` | Sticky map + scrollable milestones |
 | `MilestoneCard.svelte` | `client/src/lib/components/about/` | Individual waypoint card |
 | `TechStackScroll.svelte` | `client/src/lib/components/about/` | 3-row infinite logo scroll |
-| `CertBadge.svelte` | `client/src/lib/components/about/` | Certification badge card |
 
 ### New route:
 | File | Purpose |
@@ -189,12 +180,11 @@ IntersectionObserver on .milestone-card elements
 ### Files to modify (MANDATORY):
 | File | Change | Lines |
 |------|--------|-------|
-| `client/src/routes/about/+page.svelte` | **New** — About page with map journey, tech stack, certs, personal | ~250-350 |
+| `client/src/routes/about/+page.svelte` | **New** — About page with map journey, tech stack, personal | ~250-350 |
 | `client/src/routes/about/+page.ts` | **New** — `export const prerender = true` + waypoint data | ~30 |
 | `client/src/lib/components/about/MapJourney.svelte` | **New** — Sticky map + scroll observer + milestone cards | ~150-200 |
 | `client/src/lib/components/about/MilestoneCard.svelte` | **New** — Waypoint card component | ~40 |
 | `client/src/lib/components/about/TechStackScroll.svelte` | **New** — 3-row infinite scroll with 40+ logos | ~100 |
-| `client/src/lib/components/about/CertBadge.svelte` | **New** — Certification badge | ~30 |
 | `client/src/lib/components/stack/index.ts` | Update — export new logo components | ~20 new lines |
 | `client/src/lib/components/stack/*.svelte` | **New** — ~20 new SVG logo components | ~20-40 each |
 | `client/src/app.css` | Add infinite-scroll row 3 animation if needed | ~5 |

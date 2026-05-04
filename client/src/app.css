@@ -184,7 +184,7 @@
 	}
 
 	.grid-item {
-		@apply bg-background dark:bg-background overflow-hidden rounded-3xl border border-border/50 dark:border-border/30 p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl;
+		@apply bg-background dark:bg-background border-border/50 dark:border-border/30 overflow-hidden rounded-3xl border p-8 shadow-md transition-shadow duration-1000 ease-in-out hover:shadow-xl;
 	}
 
 	.grid-item-preview {

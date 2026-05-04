@@ -41,10 +41,7 @@
 	];
 </script>
 
-<a
-	href={resolve('/about')}
-	class="group relative flex h-full w-full flex-col justify-between overflow-hidden"
->
+<a href={resolve('/about')} class="group relative flex h-full w-full flex-col justify-between overflow-hidden">
 	<h3 class="font-heading text-foreground text-base font-semibold">Tech Stack</h3>
 
 	<!-- Double carousel -->
@@ -150,13 +147,21 @@
 	}
 
 	@keyframes scroll-left {
-		from { transform: translateX(0); }
-		to { transform: translateX(-100%); }
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-100%);
+		}
 	}
 
 	@keyframes scroll-right {
-		from { transform: translateX(-100%); }
-		to { transform: translateX(0); }
+		from {
+			transform: translateX(-100%);
+		}
+		to {
+			transform: translateX(0);
+		}
 	}
 
 	.pause {

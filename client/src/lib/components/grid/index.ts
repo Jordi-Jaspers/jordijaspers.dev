@@ -1,7 +1,7 @@
 import SpotifyTile from './SpotifyTile.svelte';
 import TechStackTile from './TechStackTile.svelte';
-import ResumeTile from './ResumeTile.svelte';
-import WorkTile from './WorkTile.svelte';
+import CareerTile from './CareerTile.svelte';
+import ProjectsTile from './ProjectsTile.svelte';
 import AboutTile from './AboutTile.svelte';
 
-export { SpotifyTile, TechStackTile, ResumeTile, WorkTile, AboutTile };
+export { SpotifyTile, TechStackTile, CareerTile, ProjectsTile, AboutTile };

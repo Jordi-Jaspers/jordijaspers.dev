@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { House, Briefcase, User, Moon, Sun } from 'lucide-svelte';
+	import { House, Briefcase, User, Moon, Sun, FolderOpen } from 'lucide-svelte';
 	import { toggleMode, setMode } from 'mode-watcher';
 	import { isDarkMode } from '$lib/stores/localstorage.svelte';
 	import { untrack } from 'svelte';
@@ -36,7 +36,8 @@
 	});
 
 	const navLinks = [
-		{ href: '/work', label: 'Work', Icon: Briefcase },
+		{ href: '/projects', label: 'Projects', Icon: FolderOpen },
+		{ href: '/career', label: 'Career', Icon: Briefcase },
 		{ href: '/about', label: 'About', Icon: User }
 	] as const;
 </script>

@@ -82,14 +82,18 @@
 					fill="currentColor"
 					aria-hidden="true"
 				>
-					<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+					<path
+						d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+					/>
 				</svg>
 			</div>
 		</div>
 	</div>
 
 	<!-- Gradient overlay + label at bottom (above map, below link) -->
-	<div class="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/60 via-black/20 to-transparent px-4 pb-3 pt-8">
+	<div
+		class="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/60 via-black/20 to-transparent px-4 pt-8 pb-3"
+	>
 		<div class="flex items-end justify-between">
 			<div>
 				<h3 class="font-heading text-lg font-semibold text-white">About</h3>
@@ -113,11 +117,7 @@
 	</div>
 
 	<!-- Invisible navigation link overlay — bottom-right cut out for Mapbox attribution -->
-	<a
-		href={resolve('/about')}
-		class="absolute inset-0 z-20"
-		aria-label="About me"
-	></a>
+	<a href={resolve('/about')} class="absolute inset-0 z-20" aria-label="About me"></a>
 </div>
 
 <style>

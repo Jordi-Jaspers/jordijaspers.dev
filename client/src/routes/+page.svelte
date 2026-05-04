@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ParticleCanvas from '$lib/components/hero/ParticleCanvas.svelte';
-	import { SpotifyTile, TechStackTile, ResumeTile, WorkTile, AboutTile } from '$lib/components/grid';
+	import { SpotifyTile, TechStackTile, CareerTile, ProjectsTile, AboutTile } from '$lib/components/grid';
 </script>
 
 <svelte:head>
@@ -39,9 +39,9 @@
 <!-- Bento Grid -->
 <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6" aria-label="Navigation grid">
 	<div class="bento-grid">
-		<!-- Work tile: 2×2 -->
-		<div class="grid-item bento-work p-4 sm:p-6">
-			<WorkTile />
+		<!-- Projects tile: 2×2 -->
+		<div class="grid-item bento-projects p-4 sm:p-6">
+			<ProjectsTile />
 		</div>
 
 		<!-- Spotify tile: 1×1 -->
@@ -59,9 +59,9 @@
 			<AboutTile />
 		</div>
 
-		<!-- Resume tile: 1×1 -->
-		<div class="grid-item bento-resume p-4 sm:p-5">
-			<ResumeTile />
+		<!-- Career tile: 1×1 -->
+		<div class="grid-item bento-career p-4 sm:p-5">
+			<CareerTile />
 		</div>
 	</div>
 </section>
@@ -80,7 +80,7 @@
 		gap: 1rem;
 	}
 
-	.bento-work {
+	.bento-projects {
 		grid-column: 1;
 		grid-row: 1 / 3;
 	}
@@ -100,7 +100,7 @@
 		grid-row: 2;
 	}
 
-	.bento-resume {
+	.bento-career {
 		grid-column: 3;
 		grid-row: 2;
 	}
@@ -109,10 +109,10 @@
 	@media (max-width: 843px) {
 		.bento-grid {
 			grid-template-columns: 1fr 1fr;
-			grid-template-rows: 240px 160px 160px 160px;
+			grid-template-rows: 400px 160px 160px 160px;
 		}
 
-		.bento-work {
+		.bento-projects {
 			grid-column: 1 / 3;
 			grid-row: 1;
 		}
@@ -132,7 +132,7 @@
 			grid-row: 3;
 		}
 
-		.bento-resume {
+		.bento-career {
 			grid-column: 1 / 3;
 			grid-row: 4;
 		}

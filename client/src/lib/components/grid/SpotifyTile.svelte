@@ -15,13 +15,13 @@
 			<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1ED760] opacity-75"></span>
 			<span class="relative inline-flex h-2 w-2 rounded-full bg-[#1ED760]"></span>
 		</span>
-		<p class="font-body text-muted-foreground text-[10px] font-medium uppercase tracking-wider">Now Playing</p>
+		<p class="font-body text-muted-foreground text-[10px] font-medium tracking-wider uppercase">Now Playing</p>
 	</div>
 
 	<!-- Song info + bars -->
 	<div class="flex items-end justify-between gap-2 overflow-hidden">
 		<div class="min-w-0">
-			<p class="font-heading text-foreground truncate text-sm font-semibold leading-tight">Blinding Lights</p>
+			<p class="font-heading text-foreground truncate text-sm leading-tight font-semibold">Blinding Lights</p>
 			<p class="font-body text-muted-foreground mt-0.5 truncate text-xs">The Weeknd</p>
 		</div>
 
